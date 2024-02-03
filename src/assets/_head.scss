@@ -1,0 +1,71 @@
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import "bootstrap/scss/_variables-dark";
+@import "bootstrap/scss/_maps.scss";
+@import "bootstrap/scss/_mixins.scss";
+@import "bootstrap/scss/_utilities";
+@import "bootstrap/scss/_helpers.scss";
+@import 'bootstrap/scss/_carousel.scss';
+
+section.head {
+    display: flex;
+    background-position: center;
+    background-size: cover;
+    height: 100dvh;
+    min-height: 500px;
+    position: relative;
+
+    .flex {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        line-height: 1;
+        background: linear-gradient(180deg, rgba(255, 255, 255, .4) 18%, rgba(255, 255, 255, 0) 80%);
+        background-clip: text;
+        text-transform: uppercase;
+        -webkit-text-fill-color: transparent;
+        z-index: 0;
+        font-weight: bold;
+        color: white;
+        transform: translateY(40%);
+    }
+
+    img {
+        z-index: 1;
+        width: 90%;
+        object-fit: contain;
+        height: fit-content;
+        max-height: 300px;
+    }
+
+    .section-btn {
+        z-index: 3;
+        color: white;
+        border: 1px solid white;
+        text-transform: uppercase;
+        font-size: .8rem;
+        position: absolute;
+        bottom: 50px;
+        width: 100px;
+        height: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 100%;
+    }
+
+    @media (min-width: 1440px) {
+        h2 {
+            font-size: 440px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        img {
+            width: 80%;
+        }
+    }
+}

@@ -3,21 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --highlights: rgb(255, 102, 0);
+  --header-size: 121px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
   }
+}
+
+section {
+  width: 100%;
 }
 
 body {
 
+}
+
+.btn {
+  padding: .75rem 1.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: .9rem;
+  border-radius: 2px;
 }
 
 @layer utilities {

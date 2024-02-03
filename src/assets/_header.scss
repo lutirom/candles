@@ -1,0 +1,20 @@
+.desktop-header {
+    height: var(--header-size);
+}
+
+.mobile-header {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    left: -100%;
+    background-color: white;
+    min-height: 100dvh;
+    width: 83.3%;
+    transition: .3s ease-out;
+    z-index: 1;
+
+    &.active {
+        left: 0;
+    }
+}

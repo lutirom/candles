@@ -1,8 +1,9 @@
 import { Archivo } from "next/font/google";
 import "./globals.css";
 import Header from './components/header';
+import Footer from "./components/footer";
 
-const archivo = Archivo({subsets: ["latin"], weight:['400', '500', '600']})
+const archivo = Archivo({subsets: ["latin"], weight:['400', '500', '600', '700']})
 
 export const metadata = {
   title: "Create Next App",
@@ -13,8 +14,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={archivo.className}>
-        <Header/>
-        {children}
+        <main>
+          <Header/>
+          {children}
+          <Footer/>
+        </main>
       </body>
     </html>
   );
