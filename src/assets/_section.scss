@@ -7,11 +7,11 @@
 @import "bootstrap/scss/_helpers.scss";
 @import 'bootstrap/scss/_carousel.scss';
 
-section.head {
+section {
     display: flex;
     background-position: center;
     background-size: cover;
-    height: 100dvh;
+    min-height: 100dvh;
     min-height: 500px;
     position: relative;
 
@@ -34,7 +34,7 @@ section.head {
         transform: translateY(40%);
     }
 
-    img {
+    .section-img {
         z-index: 1;
         width: 90%;
         object-fit: contain;
@@ -57,6 +57,22 @@ section.head {
         border-radius: 100%;
     }
 
+    .slick-slide{
+        padding: 2rem;
+
+        img {
+            transition: scale .2s;
+        }
+    }
+
+    .slick-center {
+
+        img {
+            scale: 1.2;
+        }
+        
+    }
+
     @media (min-width: 1440px) {
         h2 {
             font-size: 440px;
@@ -64,7 +80,7 @@ section.head {
     }
 
     @media (min-width: 768px) {
-        img {
+        .section-img {
             width: 80%;
         }
     }
