@@ -1,0 +1,52 @@
+.shop-page {
+
+    section.head {
+        background-image: url('/shop-bg-1.jpg');
+    }
+
+    section.products {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .5rem;
+
+        .product {
+            width: 100%;
+            aspect-ratio: 3/4;
+            position: relative;
+
+            &.sale::before {
+                content: 'SALE!';
+                line-height: 1;
+                position: absolute;
+                font-size: .8rem;
+                color: white;
+                padding: .25rem .5rem;
+                top: 1rem;
+                left: 0;
+                background-color: rgb(105, 176, 243);
+            }
+        }
+    }
+
+    section.categories {
+
+        .categories-items {
+            & > * {
+                margin-top: .75rem;
+                display: flex;
+                justify-content: space-between;
+
+                &:first-child {
+                    margin-top: 1.5rem;
+                }
+            }
+        }
+    }
+
+    section.best-sellers {
+        img {
+            aspect-ratio: 5/3;
+            object-fit: cover;
+        }
+    }
+}

@@ -1,14 +1,10 @@
 'use client'
-
-import { Libre_Baskerville } from "next/font/google";
 import Image from "next/image";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
-const baskerville = Libre_Baskerville({subsets: ['latin'], weight: ['400']})
 
 export default function ParallaxCarousel() {
   const sliderSettings = {
