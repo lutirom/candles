@@ -21,7 +21,7 @@ export default function Shop({ searchParams }) {
     const end = Number(page) * Number(perPage);
 
     function getPath() {
-        const pathArr = fs.readdirSync(path.join(process.cwd(), "public/products")).map((file) => {
+        const pathArr = fs.readdirSync(path.join("/products")).map((file) => {
             return "/products/" + file;
         });
 
