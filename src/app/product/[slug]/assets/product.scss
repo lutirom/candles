@@ -1,6 +1,6 @@
 .product-page {
     section.head {
-        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/products/product-bg-1.jpg");
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/product-bg-1.jpg");
     }
 
     .share-btns {
@@ -35,5 +35,20 @@
                 opacity: 1;
             }
         }
+    }
+
+    .controls {
+        display: none;
+
+        @media (min-width: 768px) {
+            display: flex;
+            padding: 1.5rem 4rem;
+            width: fit-content;
+            border-radius: 9999px;
+        }
+    }
+
+    .desc {
+        overflow: hidden;
     }
 }

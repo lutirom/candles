@@ -1,0 +1,30 @@
+footer {
+    background-color: #222222;
+    color: white;
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+
+    .footer-links {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        justify-content: center;
+
+        @media (min-width: 768px) {
+            flex-direction: row;
+        }
+    }
+
+    .footer-column {
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+
+        @media (min-width: 768px) {
+            text-align: left;
+        }
+    }
+}

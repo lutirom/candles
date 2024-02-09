@@ -1,16 +1,23 @@
 header {
-    transition: .2s ease-in;
+    transition: 0.2s ease-in;
 
     .desktop-header {
         display: none;
     }
-    
+
     .mobile-header {
         display: flex;
     }
 
+    &.text-black li.active {
+        border-bottom: 1px solid black;
+        color: black;
+    }
+
     li.active {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid var(--highlights);
+        transition: 0.2s;
+        color: var(--highlights);
     }
 
     &.desktop-header {
@@ -37,7 +44,7 @@ header {
     background-color: white;
     min-height: 100dvh;
     width: 80%;
-    transition: .3s ease-out;
+    transition: 0.3s ease-out;
     z-index: 11;
 
     &.active {

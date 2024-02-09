@@ -3,56 +3,67 @@
 @tailwind utilities;
 
 :root {
-  --highlights: rgb(255, 102, 0);
-  --header-size: 121px;
+    --highlights: rgb(255, 102, 0);
+    --header-size: 121px;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-
-  }
+    :root {
+    }
 }
 
-section {
-  width: 100%;
-  padding: 1.5rem 1.5rem;
+section,
+footer {
+    width: 100%;
+    padding: 1.5rem 1.5rem;
+
+    @media (min-width: 1200px) {
+        padding: 3rem;
+    }
 }
 
 section.head {
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 0;
-  padding-bottom: 3rem;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  background-position: center;
-  background-size: cover;
-  min-height: 250px;
+    padding-top: 0;
+    padding-bottom: 3rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    background-position: center;
+    background-size: cover;
+    min-height: 250px;
 
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
 }
 
 body {
-
 }
 
 .btn {
-  padding: .75rem 1.75rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: .9rem;
-  border-radius: 2px;
+    padding: 0.75rem 1.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 2px;
+}
+
+.animate-height-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease-out;
+
+    &.active {
+        grid-template-rows: 1fr;
+    }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

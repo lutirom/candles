@@ -35,7 +35,7 @@ export default function Header() {
         }
     }
     return (
-        <header className={`fixed w-full z-10  ${scrolled ? "bg-white text-black" : "text-white"}`}>
+        <header className={`fixed w-full z-[11]  ${scrolled ? "bg-white text-black" : "text-white"}`}>
             <div className="desktop-header container mx-auto py-10 items-center justify-between">
                 <Link
                     href={"/"}
@@ -51,11 +51,8 @@ export default function Header() {
                         <Link href={"/shop"}>
                             <li className={currentPath === "/shop" ? "active" : undefined}>Shop</li>
                         </Link>
-                        <Link href={"#"}>
-                            <li>Pages</li>
-                        </Link>
-                        <Link href={"#"}>
-                            <li>Blog</li>
+                        <Link href={"/contact"}>
+                            <li>Contact Us</li>
                         </Link>
                     </nav>
                     <form
@@ -63,7 +60,7 @@ export default function Header() {
                         className="search-bar ml-6 border-bottom border-b">
                         <input
                             type="text"
-                            className="inline py-2 bg-transparent placeholder:text-white focus-visible:outline-none"
+                            className={`inline py-2 bg-transparent ${scrolled ? "placeholder:text-gray-300" : "placeholder:text-white"}  focus-visible:outline-none`}
                             placeholder="Search..."
                         />
                         <svg
@@ -229,24 +226,12 @@ export default function Header() {
                     </Link>
                     <Link
                         className="mt-8 flex justify-between"
-                        href={"#"}>
-                        <li>Pages</li>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 16 16"
-                            fill="lightgray"
-                            className="w-4 h-4 mr-2">
-                            <path
-                                fillRule="evenodd"
-                                d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </Link>
-                    <Link
-                        className="mt-8 flex justify-between"
-                        href={"#"}>
-                        <li>Blog</li>
+                        href={"/contact"}>
+                        <li
+                            className={currentPath === "/contact" ? "active" : undefined}
+                            onClick={toggleMenu}>
+                            Contact Us
+                        </li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 16 16"

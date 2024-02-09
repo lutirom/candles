@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ParallaxSection from "./components/ParallaxSection";
 import Carousel from "./components/Carousel";
+import Link from "next/link";
 
 export default function Page() {
     return (
@@ -14,7 +15,11 @@ export default function Page() {
                     width={0}
                     height={0}
                     sizes="100vw"></Image>
-                <button className="section-btn">Shop more</button>
+                <Link
+                    href={"/shop"}
+                    className="section-btn">
+                    Shop more
+                </Link>
             </ParallaxSection>
             <ParallaxSection
                 color="bg-[#383838]"
@@ -26,7 +31,11 @@ export default function Page() {
                     width={0}
                     height={0}
                     sizes="100vw"></Image>
-                <button className="section-btn">Shop more</button>
+                <Link
+                    href={"/shop"}
+                    className="section-btn">
+                    Shop more
+                </Link>
             </ParallaxSection>
             <ParallaxSection
                 color="bg-[#D39698]"
@@ -38,7 +47,11 @@ export default function Page() {
                     width={0}
                     height={0}
                     sizes="100vw"></Image>
-                <button className="section-btn">Shop more</button>
+                <Link
+                    href={"/shop"}
+                    className="section-btn">
+                    Shop more
+                </Link>
             </ParallaxSection>
             <ParallaxSection
                 text="Gallery"
