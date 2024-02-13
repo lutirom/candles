@@ -16,8 +16,11 @@ section,
 footer {
     width: 100%;
     padding: 1.5rem 1.5rem;
+}
 
-    @media (min-width: 1200px) {
+@media (min-width: 1200px) {
+    section,
+    footer {
         padding: 3rem;
     }
 }
@@ -33,8 +36,17 @@ section.head {
     background-position: center;
     background-size: cover;
     min-height: 250px;
+}
 
-    @media (min-width: 768px) {
+.black-btn {
+    padding: 1.25rem;
+    background-color: black;
+    color: white;
+    line-height: 1;
+}
+
+@media (min-width: 768px) {
+    section.head {
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-end;
@@ -56,10 +68,10 @@ body {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.5s ease-out;
+}
 
-    &.active {
-        grid-template-rows: 1fr;
-    }
+.animate-height-wrapper.active {
+    grid-template-rows: 1fr;
 }
 
 @layer utilities {

@@ -36,7 +36,7 @@ export default function Product() {
                             <div className="action-btns ">
                                 <div className="cart-buttons flex gap-6 h-14 *:h-full">
                                     <ButtonQuantity />
-                                    <button className="add-cart px-10 uppercase text-white bg-black">Add to cart</button>
+                                    <button className="add-cart black-btn uppercase">Add to cart</button>
                                 </div>
                                 <div className="user-btns mt-4 text-sm text-gray-500">
                                     <span>Add to wishlist</span>

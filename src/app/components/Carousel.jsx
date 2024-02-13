@@ -13,7 +13,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
         infinite: true,
         centerPadding: "60px",
         slidesToShow: 3,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         speed: 500,
         responsive: [
             {
