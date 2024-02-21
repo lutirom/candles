@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@preact/signals-react": "^2.0.0",
+    "@prisma/client": "^5.9.1",
     "bootstrap": "^5.3.2",
+    "jose": "^5.2.2",
+    "mysql2": "^3.9.1",
     "next": "14.1.0",
     "react": "^18",
     "react-bootstrap": "^2.10.0",
@@ -23,6 +26,7 @@
   "devDependencies": {
     "autoprefixer": "^10.0.1",
     "postcss": "^8",
+    "prisma": "^5.9.1",
     "tailwindcss": "^3.3.0"
   }
 }

@@ -28,6 +28,36 @@
                 left: 0;
                 background-color: rgb(105, 176, 243);
             }
+
+            .product-actions {
+                position: absolute;
+                bottom: 5%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+
+                & > * {
+                    padding: 0.5rem;
+                    background-color: white;
+                    translate: 0 100%;
+                    opacity: 0;
+                    transition: all 0.2s ease-in-out;
+
+                    &:nth-child(2) {
+                        transition-delay: 100ms;
+                    }
+
+                    &:hover {
+                        color: var(--highlights);
+                    }
+                }
+            }
+
+            &:hover .product-actions > * {
+                translate: 0;
+                opacity: 1;
+            }
         }
 
         @media (min-width: 768px) {

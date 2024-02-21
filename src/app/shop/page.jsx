@@ -9,8 +9,14 @@ import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import Head from "./../components/head";
+import addToCart from "./func/addToCart";
+import ProductActions from "./components/ProductActions";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+
+const res = await fetch(`${process.env.APP_URL}/api/products`, { next: { revalidate: 3600 } });
+
+const products = await res.json();
 
 export default function Shop({ searchParams }) {
     const page = searchParams["page"] ?? 1;
@@ -20,29 +26,41 @@ export default function Shop({ searchParams }) {
     const start = Number(page - 1) * Number(perPage);
     const end = Number(page) * Number(perPage);
 
-    function getPath() {
-        const pathArr = fs.readdirSync(path.join(process.cwd(), "public/products")).map((file) => {
-            return "/products/" + file;
-        });
+    // function getPath() {
+    //     const pathArr = fs.readdirSync(path.join(process.cwd(), "public/products")).map((file) => {
+    //         return "/products/" + file;
+    //     });
 
-        return pathArr;
-    }
+    //     return pathArr;
+    // }
 
-    const products = getPath(); //pathImg
+    // const products = getPath(); //pathImg
+
+    // function handleAddToCart(id) {
+    //     console.log(id);
+    // }
 
     const productsOnPage = products.slice(start, end).map((product, index) => {
         return (
             <div
-                key={uuidv4()}
-                className="product sale">
-                <Link href={`/product/product-${index}/`}>
-                    <Image
-                        src={product}
-                        width={250}
-                        height={250}></Image>
-                    <p>Lorem ipsum dolor sit amet </p>
+                key={product.id}
+                className="product-wrapper">
+                <div className="product sale">
+                    <Link href={`/product/${product.name}/`}>
+                        <Image
+                            src={product.img}
+                            width={600}
+                            height={800}
+                            alt={`photo of ${product.name}`}></Image>
+                    </Link>
+                    <div className="product-actions">
+                        <ProductActions productId={product.id} />
+                    </div>
+                </div>
+                <div className="product-description">
+                    <p>{product.name}</p>
                     <span className="text-gray-500">$14.00</span>
-                </Link>
+                </div>
             </div>
         );
     });
