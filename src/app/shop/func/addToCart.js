@@ -17,7 +17,7 @@ export default async function addToCart(id) {
 
     const parsed = await decrypt(session);
 
-    parsed.user.basket = parsed.user.basket !== undefined ? [...parsed.user.basket, id] : [id];
+    parsed.user.cart = parsed.user.cart !== undefined ? [...parsed.user.cart, id] : [id];
 
     const expires = new Date(new Date(Date.now() + 259200 * 1000));
 
