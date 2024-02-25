@@ -30,6 +30,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-1-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>
@@ -37,6 +38,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-2-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>
@@ -44,6 +46,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-3-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>
@@ -51,6 +54,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-1-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>
@@ -58,6 +62,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-2-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>
@@ -65,6 +70,7 @@ export default function Carousel({ hasArrows, enableCenterMode, amountMobile, im
             <div>
                 <Image
                     src={"/m5-slide-3-2.jpg"}
+                    alt="Image of Candle"
                     className="object-cover w-full "
                     width={350}
                     height={350}></Image>

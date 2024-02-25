@@ -2,8 +2,28 @@ import Head from "../components/head";
 import "./assets/checkout.scss";
 import OpeningBlock from "./components/OpeningBlock";
 import { Libre_Baskerville } from "next/font/google";
+import getProductsInfo from "./func/getProductsInfo";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+
+const productsInfo = await getProductsInfo();
+
+const orderInfo = productsInfo.map((product) => {
+    return (
+        <div
+            className="flex justify-between py-2 border-b"
+            key={product.id}>
+            <span>
+                {product.name}({product.amount})
+            </span>{" "}
+            <span className="justify-self-end">${(product.amount * product.price).toFixed(2)}</span>
+        </div>
+    );
+});
+
+const orderTotal = productsInfo.reduce((sum, currentProduct) => {
+    return sum + currentProduct.price * currentProduct.amount;
+}, 0);
 
 export default function Checkout() {
     return (
@@ -101,26 +121,30 @@ export default function Checkout() {
                         placeholder="Special notes"
                     />
                     <p className={`${baskerville.className} pb-2 mt-7 text-xl tracking-tighter border-b`}>Your order</p>
-                    <div className="mt-7 font-medium grid grid-cols-2 *:py-3 [&>*:nth-child(3n)]:p-0">
-                        <span>Product</span> <span className="justify-self-end">Subtotal</span>
-                        <div className="border-b col-span-2"></div>
-                        <span>Product name</span> <span className="justify-self-end">$7.99</span>
-                        <div className="border-b col-span-2"></div>
-                        <span>Subtotal</span> <span className="justify-self-end">$7.99</span>
-                        <div className="border-b col-span-2"></div>
-                        <span>Shipping</span>
-                        <div className="justify-self-end">
-                            <input
-                                type="radio"
-                                className="block"
-                            />
-                            <input
-                                type="radio"
-                                className="block mt-2"
-                            />
+                    <div className="mt-7 font-medium ">
+                        <div className="flex justify-between py-2 border-b">
+                            <span>Product</span> <span className="justify-self-end">Subtotal</span>
                         </div>
-                        <div className="border-b col-span-2"></div>
-                        <span>Total</span> <span className="justify-self-end">$7.99</span>
+                        {orderInfo}
+                        <div className="flex justify-between py-2 border-b">
+                            <span>Subtotal</span> <span className="justify-self-end">${orderTotal}</span>
+                        </div>
+                        <div className="flex justify-between py-2 border-b">
+                            <span>Shipping</span>
+                            <div className="justify-self-end">
+                                <input
+                                    type="radio"
+                                    className="block"
+                                />
+                                <input
+                                    type="radio"
+                                    className="block mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex justify-between py-2 border-b">
+                            <span>Total</span> <span className="justify-self-end">Sum</span>
+                        </div>
                     </div>
 
                     <p className="bg-gray-100 p-4 mt-7">Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.</p>

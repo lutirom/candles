@@ -3,7 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const secret = new TextEncoder().encode(process.env.SESSION_SECRET);
 

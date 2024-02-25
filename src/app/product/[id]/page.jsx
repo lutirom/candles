@@ -6,10 +6,15 @@ import Image from "next/image";
 import ButtonQuantity from "./components/buttonQuantity";
 import Carousel from "@/app/components/Carousel";
 import ProductDesc from "./components/productDesc";
+import ProductButtons from "./components/productButtons";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default function Product() {
+export default async function Product({ params }) {
+    const res = await fetch(`${process.env.APP_URL}/api/get-product/${params.id}`, { cache: "no-cache" });
+
+    const product = await res.json();
+
     return (
         <div className="product-page">
             <Head name="Product name"></Head>
@@ -17,7 +22,7 @@ export default function Product() {
                 <div className="container mx-auto">
                     <div className="flex flex-col md:flex-row gap-8">
                         <Image
-                            src={"/products/prod-1-600x800.jpg"}
+                            src={product.img}
                             height={350}
                             width={350}
                             className="w-full md:w-1/2"
@@ -29,15 +34,12 @@ export default function Product() {
                                     className="text-[var(--highlights)]">
                                     Product category
                                 </a>
-                                <h1 className="text-2xl">Product Name</h1>
-                                <p className="mt-4 text-[var(--highlights)] text-2xl font-semibold">$14.00</p>
+                                <h1 className="text-2xl">{product.name}</h1>
+                                <p className="mt-4 text-[var(--highlights)] text-2xl font-semibold">{product.price}</p>
                                 <p className="mt-4 text-sm text-gray-500">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus aliquam vitae perferendis quod voluptas sint dolorum molestias aspernatur reprehenderit. Incidunt sequi delectus repudiandae nulla facere vel labore laboriosam eligendi officia?</p>
                             </div>
                             <div className="action-btns ">
-                                <div className="cart-buttons flex gap-6 h-14 *:h-full">
-                                    <ButtonQuantity />
-                                    <button className="add-cart black-btn uppercase">Add to cart</button>
-                                </div>
+                                <ProductButtons productId={params.id} />
                                 <div className="user-btns mt-4 text-sm text-gray-500">
                                     <span>Add to wishlist</span>
                                     <span className="ml-10">Add to compare</span>

@@ -46,7 +46,7 @@ export default function Shop({ searchParams }) {
                 key={product.id}
                 className="product-wrapper">
                 <div className="product sale">
-                    <Link href={`/product/${product.name}/`}>
+                    <Link href={`/product/${product.id}/`}>
                         <Image
                             src={product.img}
                             width={600}

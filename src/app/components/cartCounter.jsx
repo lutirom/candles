@@ -6,8 +6,12 @@ export const numberOfProductsInCart = signal(0);
 
 export default function CartCounter({ cart }) {
     if (cart) {
-        numberOfProductsInCart.value = cart.length;
+        const amount = Object.values(cart).reduce((accumulator, currProd) => {
+            return accumulator + currProd;
+        });
+
+        numberOfProductsInCart.value = amount;
     }
 
-    return <p className=" rounded-full bg-red-600 text-white flex justify-center items-center leading-none text-xs w-4 h-4">{numberOfProductsInCart}</p>;
+    return <p className={`${!cart ? "hidden" : "flex"} cart-counter bg-red-600 text-xs`}>{numberOfProductsInCart}</p>;
 }
