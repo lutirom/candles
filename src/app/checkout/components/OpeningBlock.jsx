@@ -89,7 +89,7 @@ export default function OpeningBlock() {
                 <form
                     className="text-gray-500 overflow-hidden"
                     method="POST">
-                    <div>
+                    <div className="pb-8">
                         <p className="pb-8">If you have have a coupon, please apply it below</p>
                         <input
                             type="text"

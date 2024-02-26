@@ -1,7 +1,7 @@
 import getCart from "@/app/func/getCart";
 import { PrismaClient } from "@prisma/client";
 
-export default async function getProductsInfo() {
+export default async function getCartProductsInfo() {
     const prisma = new PrismaClient();
 
     const cart = await getCart();
@@ -15,11 +15,6 @@ export default async function getProductsInfo() {
             id: {
                 in: productsId,
             },
-        },
-        select: {
-            id: true,
-            name: true,
-            price: true,
         },
     });
 

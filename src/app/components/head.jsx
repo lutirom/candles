@@ -7,7 +7,7 @@ export default function Head({ name }) {
     return (
         <section className={`head ${baskerville.className}`}>
             <div className="container mx-auto">
-                <h2 className="text-4xl">{name}</h2>
+                <h2 className="text-6xl">{name}</h2>
                 <Breadcrumbs />
             </div>
         </section>

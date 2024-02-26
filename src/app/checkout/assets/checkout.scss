@@ -2,4 +2,30 @@
     .head {
         background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/cart-bg.jpg");
     }
+
+    .name-block {
+        @media (min-width: 768px) {
+            display: flex;
+            gap: 2rem;
+
+            & > * {
+                width: 50%;
+            }
+        }
+    }
+
+    .checkout-form {
+        @media (min-width: 1024px) {
+            display: flex;
+            gap: 2rem;
+
+            .credentials {
+                width: 70%;
+            }
+
+            .order-info {
+                width: 30%;
+            }
+        }
+    }
 }

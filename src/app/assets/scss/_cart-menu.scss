@@ -1,0 +1,32 @@
+.cart-menu {
+    // display: none;
+    padding: 2rem;
+    position: fixed;
+    right: -100%;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    z-index: 12;
+    transition: right 0.3s ease-out;
+    color: black;
+
+    .product {
+        display: flex;
+        gap: 1.5rem;
+        padding-top: 1.5rem;
+
+        .remove {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &.active {
+        right: 0;
+    }
+
+    @media (min-width: 768px) {
+        width: 30%;
+        right: -30%;
+    }
+}

@@ -12,7 +12,7 @@ export default function ProductActions({ productId }) {
         <>
             <div
                 onClick={handleClick}
-                className="add-to-cart">
+                className="add-to-cart cursor-pointer">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
