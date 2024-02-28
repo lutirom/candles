@@ -6,6 +6,10 @@ export default async function getCartProductsInfo() {
 
     const cart = await getCart();
 
+    if (!cart) {
+        return;
+    }
+
     const productsId = Object.keys(cart).map((product) => {
         return Number(product);
     });

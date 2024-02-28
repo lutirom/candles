@@ -8,13 +8,15 @@ import Link from "next/link";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function CartMenu({ cartProductsInfo, cartOpen, toggleCart }) {
+    console.log("renderCartMenu");
+
     const orderTotal = cartProductsInfo
-        .reduce((sum, currentProduct) => {
+        ?.reduce((sum, currentProduct) => {
             return sum + currentProduct.price * currentProduct.amount;
         }, 0)
         .toFixed(2);
 
-    const orderInfo = cartProductsInfo.map((product) => {
+    const orderInfo = cartProductsInfo?.map((product) => {
         return (
             <div
                 className="product"
@@ -27,7 +29,7 @@ export default function CartMenu({ cartProductsInfo, cartOpen, toggleCart }) {
                 <div>
                     <p>{product.name}</p>
                     <p className="text-gray-500 text-sm">
-                        {product.amount} <span className="text-sm">x</span> {product.price}
+                        {product.amount} <span className="text-sm">x</span> ${product.price}
                     </p>
                 </div>
                 <svg

@@ -1,17 +1,20 @@
 "use client";
+import { useEffect, useState } from "react";
 
-import { signal } from "@preact/signals-react";
-
-export const numberOfProductsInCart = signal(0);
+// export const numberOfProductsInCart = signal(0);
 
 export default function CartCounter({ cart }) {
-    if (cart) {
-        const totalAmount = Object.values(cart).reduce((accumulator, currProd) => {
-            return accumulator + currProd;
-        });
+    const [numberOfProductsInCart, setNumberOfProductsInCart] = useState(0);
 
-        numberOfProductsInCart.value = totalAmount;
-    }
+    useEffect(() => {
+        if (cart) {
+            const totalAmount = Object.values(cart).reduce((accumulator, currProd) => {
+                return accumulator + currProd;
+            });
+
+            setNumberOfProductsInCart(totalAmount);
+        }
+    }, [cart]);
 
     return <p className={`${!cart ? "hidden" : "flex"} cart-counter bg-red-600 text-xs`}>{numberOfProductsInCart}</p>;
 }
