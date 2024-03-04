@@ -10,6 +10,8 @@ import MobileHeader from "./mobileHeader";
 import MobileMenu from "./mobileMenu";
 
 export default function Header({ cart, cartProductsInfo }) {
+    //TODO: optimize rendering of elements in this component - they shouldn't trigger rerendering of each other useMemo??
+
     const [menuOpen, setMenuOpen] = useState(false);
 
     const [scrolled, setScrolled] = useState(false);

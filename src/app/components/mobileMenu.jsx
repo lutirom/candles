@@ -23,7 +23,7 @@ export default function MobileMenu({ toggleMenu, menuOpen }) {
 
     return (
         <div
-            className={`${menuOpen ? "active" : undefined} mobile-menu mx-auto p-10 text-black`}
+            className={`${menuOpen ? "active" : undefined} menu mobile-menu mx-auto text-black`}
             ref={mobileMenu}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"

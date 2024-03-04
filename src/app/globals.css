@@ -56,6 +56,10 @@ section.head {
 body {
 }
 
+.menu {
+    padding: 2.5rem;
+}
+
 .btn {
     text-align: center;
     display: block;

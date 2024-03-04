@@ -44,7 +44,7 @@ export default function CartMenu({ cartProductsInfo, cartOpen, toggleCart }) {
     });
 
     return (
-        <div className={`${cartOpen ? "active" : undefined} cart-menu`}>
+        <div className={`${cartOpen ? "active" : undefined} menu cart-menu`}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"

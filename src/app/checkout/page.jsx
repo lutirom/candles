@@ -7,7 +7,7 @@ import FormCheckout from "./components/FormCheckout";
 
 const cartProductsInfo = await getCartProductsInfo();
 
-const res = await fetch(`${process.env.APP_URL}/api/np/get-cities`, { method: "POST" });
+const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, { method: "POST" });
 
 const npCities = await res.json();
 
