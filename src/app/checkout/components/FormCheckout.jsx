@@ -1,136 +1,241 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Libre_Baskerville } from "next/font/google";
+import { useFormState } from "react-dom";
 import getSettlements from "../func/getSettlements";
 import getCities from "../func/getCities";
+import getDepartments from "../func/getDepartments";
 import ItemsList from "./ItemsList";
+import Image from "next/image";
+import createOrder from "../func/createOrder";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
+    const initialState = {
+        areaError: "",
+        dpError: "",
+    };
+
+    const areaInput = useRef();
+
     const npArea = useRef();
+    const npSettlementRegion = useRef();
     const npSettlement = useRef();
-    const npCity = useRef();
+    const npDepartment = useRef();
 
-    // const [npInfo, setNpInfo] = useState({
-    //     settlements: Array,
-    //     cities: Array,
-    // });
-
-    const [npDeliveryLocation, setNpDeliveryLocation] = useState({
+    const currentOptions = useRef({
         names: {
-            npArea: "",
-            npSettlement: "",
-            npCity: "",
+            npArea: String,
+            npSettlementRegion: String,
+            npSettlement: String,
+            npDepartment: String,
         },
-        items: {
-            areas: (
-                <ItemsList
-                    items={npCities}
-                    option={"area"}
-                    chooseOption={chooseOption}
-                />
-            ),
-            settlements: "",
-            cities: "",
+        refs: {
+            npArea: String,
+            npSettlementRegion: String,
+            npSettlement: String,
+            npDepartment: String,
         },
     });
 
-    const [inputFilled, setInputFilled] = useState({
-        area: false,
-        settlement: false,
-        city: false,
+    const [pending, setPending] = useState(false);
+
+    const [state, formAction] = useFormState(createOrder, initialState);
+
+    const [npDeliveryLocation, setNpDeliveryLocation] = useState({
+        names: Object,
+        items: (
+            <ItemsList
+                items={npCities}
+                optionType={"area"}
+                chooseOption={chooseOption}
+            />
+        ),
     });
 
     const [npMenuOpen, setNpMenuOpen] = useState(false);
 
+    useEffect(() => {
+        if (state?.areaError?.length > 1) {
+            areaInput.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        if (state?.dpError?.length > 1) {
+            areaInput.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+    }, [state]);
+
     async function sendReq() {
-        const cities = await getCities("e4b03967-4b33-11e4-ab6d-005056801329");
-        console.log("🚀 ~ sendReq ~ sett:", cities);
+        const dep = await getDepartments(currentOptions.current.refs.npSettlement);
+        console.log("🚀 ~ sendReq ~ dep:", dep);
     }
 
-    function toggleNpMenu(e) {
-        e.preventDefault();
+    async function openDpMenu() {
+        const departments = await getDepartments(currentOptions.current.refs.npSettlement).then((res) => {
+            setPending(false);
+            return res;
+        });
+
+        setNpDeliveryLocation((prevLocations) => {
+            return {
+                ...prevLocations,
+                items: (
+                    <ItemsList
+                        items={departments}
+                        optionType={"department"}
+                        chooseOption={chooseOption}
+                    />
+                ),
+            };
+        });
         setNpMenuOpen(true);
     }
 
-    async function chooseOption(optionType, option) {
-        if (optionType === "area") {
-            const settlements = await getSettlements(option.ref);
-            npArea.current.value = option.ref;
+    function openNpMenu() {
+        setNpMenuOpen(true);
+    }
 
-            setNpDeliveryLocation((prevLocations) => {
-                return {
-                    names: { ...prevLocations.names, npArea: option.name },
-                    items: {
-                        ...prevLocations.items,
-                        settlements: (
-                            <ItemsList
-                                items={settlements}
-                                option={"settlement"}
-                                chooseOption={chooseOption}
-                            />
-                        ),
-                    },
-                };
-            });
-            setInputFilled((prevInputFilled) => {
-                return { ...prevInputFilled, area: true };
-            });
-
-            return;
-        }
-
-        if (optionType === "settlement") {
-            const cities = await getCities(option.ref);
-            npSettlement.current.value = option.ref;
-
-            setNpDeliveryLocation((prevLocations) => {
-                return {
-                    names: { ...prevLocations.names, npSettlement: option.name },
-                    items: {
-                        ...prevLocations.items,
-                        cities: (
-                            <ItemsList
-                                items={cities}
-                                option={"city"}
-                                chooseOption={chooseOption}
-                            />
-                        ),
-                    },
-                };
-            });
-            setInputFilled((prevInputFilled) => {
-                return { ...prevInputFilled, settlement: true };
-            });
-
-            return;
-        }
-
-        if (optionType === "city") {
-            console.log("🚀 ~ chooseOption ~ optionType:", optionType);
-
-            setNpDeliveryLocation((prevLocations) => {
-                return { ...prevLocations, names: { ...prevLocations.names, npCity: option.name } };
-            });
-            setInputFilled((prevInputFilled) => {
-                return { ...prevInputFilled, city: true };
-            });
-        }
-
+    function closeNpMenu() {
+        resetNpMenu();
         setNpMenuOpen(false);
     }
 
-    async function handleForm(formData) {
-        console.log(formData.get("areaRef"));
+    function resetNpMenu() {
+        currentOptions.current.names = {
+            npArea: String,
+            npSettlementRegion: String,
+            npSettlement: String,
+            npDepartment: String,
+        };
+        setNpDeliveryLocation((prevLocations) => {
+            return {
+                ...prevLocations,
+                items: (
+                    <ItemsList
+                        items={npCities}
+                        optionType={"area"}
+                        chooseOption={chooseOption}
+                    />
+                ),
+            };
+        });
+    }
+
+    async function previousOptions() {
+        if (typeof currentOptions.current.names.npArea !== "string") {
+            return;
+        }
+
+        if (typeof currentOptions.current.names.npSettlementRegion !== "string") {
+            resetNpMenu();
+            return;
+        }
+
+        if (typeof currentOptions.current.names.npSettlement !== "string") {
+            currentOptions.current.names.npSettlementRegion = String;
+            const settlementRegions = await getSettlements(currentOptions.current.refs.npArea);
+
+            setNpDeliveryLocation((prevLocations) => {
+                return {
+                    ...prevLocations,
+                    items: (
+                        <ItemsList
+                            items={settlementRegions}
+                            optionType={"settlementRegion"}
+                            chooseOption={chooseOption}
+                        />
+                    ),
+                };
+            });
+        }
+    }
+
+    async function chooseOption(optionType, option) {
+        setPending(true);
+        if (optionType === "area") {
+            const settlementRegions = await getSettlements(option.ref).then((res) => {
+                setPending(false);
+                return res;
+            });
+
+            currentOptions.current.names.npArea = option.name;
+
+            currentOptions.current.refs.npArea = option.ref;
+
+            setNpDeliveryLocation((prevLocations) => {
+                return {
+                    ...prevLocations,
+                    items: (
+                        <ItemsList
+                            items={settlementRegions}
+                            optionType={"settlementRegion"}
+                            chooseOption={chooseOption}
+                        />
+                    ),
+                };
+            });
+        }
+
+        if (optionType === "settlementRegion") {
+            const settlements = await getCities(option.ref).then((res) => {
+                setPending(false);
+                return res;
+            });
+            currentOptions.current.names.npSettlementRegion = option.name;
+            currentOptions.current.refs.npSettlementRegion = option.ref;
+
+            setNpDeliveryLocation((prevLocations) => {
+                return {
+                    ...prevLocations,
+                    items: (
+                        <ItemsList
+                            items={settlements}
+                            optionType={"settlement"}
+                            chooseOption={chooseOption}
+                        />
+                    ),
+                };
+            });
+        }
+
+        if (optionType === "settlement") {
+            currentOptions.current.names.npSettlement = option.name;
+            currentOptions.current.refs.npSettlement = option.ref;
+            npArea.current.value = currentOptions.current.names.npArea;
+            npSettlementRegion.current.value = currentOptions.current.names.npSettlementRegion;
+            npSettlement.current.value = currentOptions.current.names.npSettlement;
+            const currentOptionsName = { ...currentOptions.current.names };
+
+            setNpDeliveryLocation((prevLocations) => {
+                return { ...prevLocations, names: currentOptionsName };
+            });
+
+            closeNpMenu();
+        }
+
+        if (optionType === "department") {
+            currentOptions.current.refs.npDepartment = option.ref;
+            currentOptions.current.names.npDepartment = option.name;
+            npDepartment.current.value = option.name;
+
+            setNpDeliveryLocation((prevLocations) => {
+                return { ...prevLocations, names: { ...prevLocations.names, npDepartment: option.name } };
+            });
+
+            setPending(false);
+            closeNpMenu();
+        }
     }
 
     return (
         <>
             <form
                 className="checkout-form"
-                action={handleForm}>
+                action={formAction}>
                 <div className="credentials">
                     <p className={`${baskerville.className} pb-2 text-xl tracking-tighter border-b`}>Billing details</p>
                     <div className="name-block">
@@ -151,7 +256,7 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                             <label
                                 htmlFor="last-name"
                                 className="mt-7 block">
-                                Last name*
+                                Last name
                             </label>
                             <input
                                 type="text"
@@ -170,20 +275,13 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                         className="block p-3 border w-full mt-4"
                         name="email"
                     />
-                    <label
-                        htmlFor="email"
-                        className="mt-7 block">
-                        Area
-                    </label>
+                    <p className="mt-7 block">Area*</p>
+                    <p className="text-red-500">{state?.areaError}</p>
                     <div
-                        name="area"
-                        placeholder="area"
                         className="flex justify-between p-3 border w-full mt-4"
-                        onClick={toggleNpMenu}
-                        disabled>
-                        <p className="text-gray-300">
-                            {npDeliveryLocation.names.npArea} {npDeliveryLocation.names.npSettlement} {npDeliveryLocation.names.npCity}
-                        </p>
+                        onClick={openNpMenu}
+                        ref={areaInput}>
+                        <p className={`${npDeliveryLocation.names?.npSettlement ? "text-gray-500" : "text-gray-300"}`}>{npDeliveryLocation.names?.npSettlement ? ` ${npDeliveryLocation.names.npSettlement} (${npDeliveryLocation.names.npSettlementRegion}, ${npDeliveryLocation.names.npArea})` : "Area"}</p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
@@ -196,9 +294,28 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                             />
                         </svg>
                     </div>
-
+                    <div className={`${npDeliveryLocation.names?.npSettlement ? "block" : "hidden"}`}>
+                        <p className="mt-7 block">Відділення*</p>
+                        <p className="text-red-500">{state?.dpError}</p>
+                        <div
+                            className="flex justify-between p-3 border w-full mt-4"
+                            onClick={openDpMenu}>
+                            <p className={`${npDeliveryLocation.names.npDepartment ? "text-gray-500" : "text-gray-300"}`}>{npDeliveryLocation.names.npDepartment ? npDeliveryLocation.names.npDepartment : "Виберіть відділення"}</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                className="w-5 h-5">
+                                <path
+                                    fillRule="evenodd"
+                                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>
+                    </div>
                     <div
-                        className="btn bg-black text-white"
+                        className="btn bg-black text-white mt-7"
                         onClick={sendReq}>
                         Test
                     </div>
@@ -228,13 +345,18 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                         />
                         <input
                             type="hidden"
+                            name="npSettlementRegion"
+                            ref={npSettlementRegion}
+                        />
+                        <input
+                            type="hidden"
                             name="npSettlement"
                             ref={npSettlement}
                         />
                         <input
                             type="hidden"
-                            name="npCity"
-                            ref={npCity}
+                            name="npDepartment"
+                            ref={npDepartment}
                         />
                     </div>
                 </div>
@@ -252,18 +374,8 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                             <div className="flex justify-between py-2 border-b">
                                 <span>Shipping</span>
                                 <div className="justify-self-end">
-                                    <input
-                                        type="radio"
-                                        className="block"
-                                    />
-                                    <input
-                                        type="radio"
-                                        className="block mt-2"
-                                    />
+                                    <p>За тарифами Нової Пошти</p>
                                 </div>
-                            </div>
-                            <div className="flex justify-between py-2 border-b">
-                                <span>Total</span> <span className="justify-self-end">Sum</span>
                             </div>
                         </div>
                         <p className="bg-gray-100 p-4 mt-7">Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.</p>
@@ -272,8 +384,43 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                     <button className="black-btn w-full mt-7 lg:mt-0 uppercase">Place order</button>
                 </div>
             </form>
-            <div className={`${npMenuOpen ? "fixed" : "hidden"} menu checkout-menu text-2xl`}>
-                <div className="bg-gray-50 p-3">{!inputFilled.area ? npDeliveryLocation.items.areas : !inputFilled.settlement ? npDeliveryLocation.items.settlements : !inputFilled.city ? npDeliveryLocation.items.cities : ""}</div>
+            <div className={`${npMenuOpen ? "fixed" : "hidden"}  menu checkout-menu text-2xl`}>
+                <div
+                    style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
+                    className={`${pending ? "block" : "hidden"} fixed top-0 left-0 w-full h-full flex justify-center items-center`}>
+                    <Image
+                        src={"/YlWC.gif"}
+                        height={50}
+                        width={50}
+                    />
+                </div>
+                <div className="flex justify-between -mt-3 mb-3">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                        onClick={previousOptions}>
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
+                    </svg>
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                        className="w-8 h-8 ml-auto"
+                        onClick={closeNpMenu}>
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                    </svg>
+                </div>
+
+                <div className="bg-gray-50 p-3">{npDeliveryLocation.items}</div>
             </div>
         </>
     );

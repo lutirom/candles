@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 export async function POST(request, { params: { areaRef } }) {
-    console.log("🚀 ~ POST ~ area:", areaRef);
     const data = {
         apiKey: `${process.env.NOVA_API}`,
         modelName: "Address",
@@ -16,6 +15,9 @@ export async function POST(request, { params: { areaRef } }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
+            next: {
+                revalidate: 86400,
+            },
         });
 
         const resData = await res.json();

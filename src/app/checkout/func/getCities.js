@@ -4,7 +4,6 @@ export default async function getCities(settlementRef) {
     });
 
     const data = await req.json();
-    console.log("🚀 ~ getCities ~ data:", data);
 
     return data.data;
 }

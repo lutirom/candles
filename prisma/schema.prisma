@@ -15,4 +15,23 @@ model Products {
   name String
   img String
   price Float
+  order_product Order_products[]
+}
+
+model Orders {
+  id Int @id @default(autoincrement())
+  client_name String
+  client_lastname String?
+  client_email String
+  delivery_info String
+  products Order_products[]
+}
+
+model Order_products {
+  id Int @id @default(autoincrement())
+  order Orders @relation(fields: [order_id], references: [id])
+  order_id Int
+  product Products @relation(fields: [product_id], references: [id])
+  product_id Int
+  amount Int
 }

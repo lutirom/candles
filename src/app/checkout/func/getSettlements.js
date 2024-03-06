@@ -4,7 +4,6 @@ export default async function getSettlements(areaRef) {
     });
 
     const data = await req.json();
-    console.log("🚀 ~ getSettlements ~ data:", data.data);
 
     return data.data;
 }
