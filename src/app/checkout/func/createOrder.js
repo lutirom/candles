@@ -1,12 +1,13 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
-import { NextResponse, NextRequest } from "next/server";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/lib/prisma";
+import getCartProductsInfo from "@/app/func/getCartProductsInfo";
+import clearCart from "@/app/checkout/func/clearCart";
 
 export default async function createOrder(prevState, formData) {
+    const products = await getCartProductsInfo();
+
     const schema = z.object({
         name: z
             .string({
@@ -30,20 +31,31 @@ export default async function createOrder(prevState, formData) {
         npSettlement: formData.get("npSettlement"),
         npDepartment: formData.get("npDepartment"),
     });
-    console.log("🚀 ~ createOrder ~ results:", results);
 
     if (!results.success) {
         return { areaError: results.error.format().npArea?._errors.join(), dpError: results.error.format().npDepartment?._errors.join() };
     }
 
     try {
-        const res = await prisma.orders.create({
+        const order = await prisma.orders.create({
             data: {
                 client_name: results.data.name,
                 client_email: results.data.email,
                 delivery_info: `${results.data.npSettlement} (${results.data.npSettlementRegion}, ${results.data.npArea}), ${results.data.npDepartment}`,
             },
         });
+
+        await prisma.order_products.createMany({
+            data: products.map((product) => {
+                return {
+                    order_id: order.id,
+                    product_id: product.id,
+                    amount: product.amount,
+                };
+            }),
+        });
+
+        clearCart();
 
         console.log("Order saved successfully");
 

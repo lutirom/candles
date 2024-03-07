@@ -1,10 +1,10 @@
 "use server";
 
-import { createSession, decrypt, encrypt } from "@/session";
+import { createSession, decrypt, encrypt, getSession } from "@/session";
 import { cookies } from "next/headers";
 
 export default async function addToCart(id, amount) {
-    const session = cookies().get("session")?.value;
+    const session = await getSession();
 
     //TODO: find way to handle adding item to cart immediately after session created
     //      this is situation when session wasn't created before hitting button add to cart

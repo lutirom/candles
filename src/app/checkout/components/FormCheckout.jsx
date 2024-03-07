@@ -9,10 +9,11 @@ import getDepartments from "../func/getDepartments";
 import ItemsList from "./ItemsList";
 import Image from "next/image";
 import createOrder from "../func/createOrder";
+import OrderInfo from "./OrderInfo";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
+export default function FormCheckout({ npCities, cartProductsInfo }) {
     const initialState = {
         areaError: "",
         dpError: "",
@@ -300,7 +301,7 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                         <div
                             className="flex justify-between p-3 border w-full mt-4"
                             onClick={openDpMenu}>
-                            <p className={`${npDeliveryLocation.names.npDepartment ? "text-gray-500" : "text-gray-300"}`}>{npDeliveryLocation.names.npDepartment ? npDeliveryLocation.names.npDepartment : "Виберіть відділення"}</p>
+                            <p className={`${typeof npDeliveryLocation.names.npDepartment === "string" ? "text-gray-500" : "text-gray-300"}`}>{typeof npDeliveryLocation.names.npDepartment === "string" ? npDeliveryLocation.names.npDepartment : "Виберіть відділення"}</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -364,19 +365,7 @@ export default function FormCheckout({ npCities, orderInfo, orderTotal }) {
                     <div className="lg:bg-gray-50 lg:pb-7 lg:p-6">
                         <p className={`${baskerville.className} pb-2 mt-7 lg:mt-0 text-xl tracking-tighter border-b`}>Your order</p>
                         <div className="mt-7 font-medium ">
-                            <div className="flex justify-between py-2 border-b">
-                                <span>Product</span> <span className="justify-self-end">Subtotal</span>
-                            </div>
-                            {orderInfo}
-                            <div className="flex justify-between py-2 border-b">
-                                <span>Subtotal</span> <span className="justify-self-end">${orderTotal}</span>
-                            </div>
-                            <div className="flex justify-between py-2 border-b">
-                                <span>Shipping</span>
-                                <div className="justify-self-end">
-                                    <p>За тарифами Нової Пошти</p>
-                                </div>
-                            </div>
+                            <OrderInfo cartProductsInfo={cartProductsInfo} />
                         </div>
                         <p className="bg-gray-100 p-4 mt-7">Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.</p>
                         <p className="mt-7">Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our </p>

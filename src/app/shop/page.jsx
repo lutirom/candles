@@ -3,13 +3,9 @@ import Image from "next/image";
 import { Libre_Baskerville } from "next/font/google";
 
 import Pagination from "./../components/pagination";
-import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 
-import fs from "fs";
-import path from "path";
 import Head from "./../components/head";
-import addToCart from "./func/addToCart";
 import ProductActions from "./components/ProductActions";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
@@ -25,20 +21,6 @@ export default function Shop({ searchParams }) {
 
     const start = Number(page - 1) * Number(perPage);
     const end = Number(page) * Number(perPage);
-
-    // function getPath() {
-    //     const pathArr = fs.readdirSync(path.join(process.cwd(), "public/products")).map((file) => {
-    //         return "/products/" + file;
-    //     });
-
-    //     return pathArr;
-    // }
-
-    // const products = getPath(); //pathImg
-
-    // function handleAddToCart(id) {
-    //     console.log(id);
-    // }
 
     const productsOnPage = products.slice(start, end).map((product, index) => {
         return (
