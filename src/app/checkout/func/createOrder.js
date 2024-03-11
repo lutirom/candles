@@ -4,9 +4,14 @@ import { z } from "zod";
 import prisma from "@/app/lib/prisma";
 import getCartProductsInfo from "@/app/func/getCartProductsInfo";
 import clearCart from "@/app/checkout/func/clearCart";
+import { redirect } from "next/navigation";
 
 export default async function createOrder(prevState, formData) {
     const products = await getCartProductsInfo();
+
+    if (!products) {
+        return { error: "Add product" };
+    }
 
     const schema = z.object({
         name: z
@@ -55,14 +60,14 @@ export default async function createOrder(prevState, formData) {
             }),
         });
 
-        clearCart();
-
         console.log("Order saved successfully");
-
-        // return { areaError: NextResponse.json(res, { status: 200 }) };
     } catch (err) {
         console.log("Error while saving - ", err);
 
-        // return { areaError: NextResponse.json(err, { status: 500 }) };
+        return { error: "Error while saving order" };
     }
+
+    await clearCart();
+
+    redirect("/thank-you");
 }

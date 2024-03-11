@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import Head from "../components/head";
 import "./assets/checkout.scss";
 import OpeningBlock from "./components/OpeningBlock";
@@ -12,6 +14,7 @@ const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, { method: "PO
 const npCities = await res.json();
 
 export default function Checkout() {
+    revalidatePath("/checkout");
     return (
         <div className="checkout-page">
             <Head name={"Checkout"} />

@@ -1,5 +1,6 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { updateSession } from "./session";
+import { redirect } from "next/navigation";
 
 export const config = {
     matcher: "/:path*",

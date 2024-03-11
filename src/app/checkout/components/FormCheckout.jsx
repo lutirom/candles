@@ -10,6 +10,7 @@ import ItemsList from "./ItemsList";
 import Image from "next/image";
 import createOrder from "../func/createOrder";
 import OrderInfo from "./OrderInfo";
+import ThankYou from "./ThankYou";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -44,6 +45,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
     const [pending, setPending] = useState(false);
 
     const [state, formAction] = useFormState(createOrder, initialState);
+    console.log("🚀 ~ FormCheckout ~ state:", state);
 
     const [npDeliveryLocation, setNpDeliveryLocation] = useState({
         names: Object,
@@ -57,6 +59,8 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
     });
 
     const [npMenuOpen, setNpMenuOpen] = useState(false);
+
+    const [thankYouOpen, setThankYouOpen] = useState(false);
 
     useEffect(() => {
         if (state?.areaError?.length > 1) {
@@ -76,6 +80,8 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
     }
 
     async function openDpMenu() {
+        setPending(true);
+
         const departments = await getDepartments(currentOptions.current.refs.npSettlement).then((res) => {
             setPending(false);
             return res;
@@ -204,6 +210,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
         }
 
         if (optionType === "settlement") {
+            setPending(false);
             currentOptions.current.names.npSettlement = option.name;
             currentOptions.current.refs.npSettlement = option.ref;
             npArea.current.value = currentOptions.current.names.npArea;
@@ -234,6 +241,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
 
     return (
         <>
+            <p className="text-red-500 mb-7">{state?.error}</p>
             <form
                 className="checkout-form"
                 action={formAction}>
@@ -374,15 +382,6 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
                 </div>
             </form>
             <div className={`${npMenuOpen ? "fixed" : "hidden"}  menu checkout-menu text-2xl`}>
-                <div
-                    style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
-                    className={`${pending ? "block" : "hidden"} fixed top-0 left-0 w-full h-full flex justify-center items-center`}>
-                    <Image
-                        src={"/YlWC.gif"}
-                        height={50}
-                        width={50}
-                    />
-                </div>
                 <div className="flex justify-between -mt-3 mb-3">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -410,6 +409,15 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
                 </div>
 
                 <div className="bg-gray-50 p-3">{npDeliveryLocation.items}</div>
+            </div>
+            <div
+                style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
+                className={`${pending ? "block" : "hidden"} fixed top-0 left-0 w-full h-full flex justify-center items-center z-20`}>
+                <Image
+                    src={"/YlWC.gif"}
+                    height={50}
+                    width={50}
+                />
             </div>
         </>
     );

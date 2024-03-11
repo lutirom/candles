@@ -1,5 +1,3 @@
-"use client";
-
 export default function OrderInfo({ cartProductsInfo }) {
     const orderInfo = cartProductsInfo?.map((product) => {
         return (
