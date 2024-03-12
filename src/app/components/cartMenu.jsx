@@ -48,6 +48,40 @@ export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
         );
     });
 
+    if (Object.keys(cartProducts).length > 0) {
+        return (
+            <div className={`${cartOpen ? "active" : undefined} menu cart-menu`}>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="w-8 h-8 ml-auto cursor-pointer"
+                    onClick={toggleCart}>
+                    <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                </svg>
+                <p className={`${baskerville.className} text-lg font-semibold`}>Shopping Cart</p>
+                <div className="h-1/2 md:h-3/5 overflow-y-scroll">{orderHtml}</div>
+                <p className="mt-4">
+                    <span className="font-semibold">Subtotal:</span> ${orderTotal}
+                </p>
+                <div className="cart-btns mt-4 *:p-2 *:w-full">
+                    <Link
+                        href={"/checkout"}
+                        className="rounded-full block text-center bg-black text-white"
+                        onClick={toggleCart}>
+                        Checkout
+                    </Link>
+                    <Link
+                        href={"/cart"}
+                        className="rounded-full block text-center border mt-4"
+                        onClick={toggleCart}>
+                        View cart
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={`${cartOpen ? "active" : undefined} menu cart-menu`}>
             <svg
@@ -59,22 +93,26 @@ export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
                 <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
             </svg>
             <p className={`${baskerville.className} text-lg font-semibold`}>Shopping Cart</p>
-            <div className="h-1/2 md:h-3/5 overflow-y-scroll">{orderHtml}</div>
-            <p className="mt-4">
-                <span className="font-semibold">Subtotal:</span> ${orderTotal}
-            </p>
-            <div className="cart-btns mt-4 *:p-2 *:w-full">
+            <div className="h-full flex justify-center items-center flex-col">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={0.5}
+                    stroke="currentColor"
+                    className="w-56 h-56">
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                    />
+                </svg>
+                <p className="text-4xl text-center">Your cart is currently empty</p>
                 <Link
-                    href={"/checkout"}
-                    className="rounded-full block text-center bg-black text-white"
+                    href="/shop"
+                    className="btn border uppercase mt-14 hover:bg-[var(--highlights)] hover:text-white transition-all"
                     onClick={toggleCart}>
-                    Checkout
-                </Link>
-                <Link
-                    href={"/cart"}
-                    className="rounded-full block text-center border mt-4"
-                    onClick={toggleCart}>
-                    View cart
+                    Return to shop
                 </Link>
             </div>
         </div>

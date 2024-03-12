@@ -1,53 +1,56 @@
-import Image from "next/image";
 import Head from "../components/head";
-import getCartProductsInfo from "../func/getCartProductsInfo";
+import { getCartProductsInfo } from "@/app/func/cart";
+import Products from "./components/products";
 import "./assets/scss/cart-page.scss";
 import Link from "next/link";
 
-const cartProductsInfo = await getCartProductsInfo();
+const cartProducts = await getCartProductsInfo();
 
-const orderInfo = cartProductsInfo.map((product) => {
-    return (
-        <div
-            className="border p-4 flex gap-4"
-            key={product.id}>
-            <Image
-                src={product.img}
-                width={75}
-                height={125}
-            />
-            <div className="des self-center">
-                <p>{product.name}</p>
-                <p className="text-sm text-gray-500 mt-2">
-                    Quantity: <span className="ml-8">{product.amount}</span>
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                    Subtotal: <span className="ml-8">${(product.amount * product.price).toFixed(2)}</span>
-                </p>
-            </div>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="remove w-4 h-4 ml-auto text-gray-500">
-                <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
-            </svg>
-        </div>
-    );
-});
-
-const orderTotal = cartProductsInfo
+const orderTotal = cartProducts
     .reduce((sum, currentProduct) => {
         return sum + currentProduct.price * currentProduct.amount;
     }, 0)
     .toFixed(2);
 
-export default function Cart(second) {
+export default function Cart() {
+    if (cartProducts.length === 0) {
+        return (
+            <div className="cart-page">
+                <Head name={"Cart"} />
+                <section className="cart">
+                    <div className="flex justify-center items-center flex-col">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={0.5}
+                            stroke="currentColor"
+                            className="w-96 h-96">
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                            />
+                        </svg>
+                        <p className="text-4xl">Your cart is currently empty</p>
+                        <Link
+                            href="/shop"
+                            className="btn border uppercase mt-14 hover:bg-[var(--highlights)] hover:text-white transition-all">
+                            Return to shop
+                        </Link>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
     return (
         <div className="cart-page">
             <Head name={"Cart"} />
             <section className="cart">
-                <div className="*:mt-4">{orderInfo}</div>
+                <div className="*:mt-4">
+                    <Products cartProducts={cartProducts} />
+                </div>
                 <form action="post">
                     <input
                         type="text"
@@ -68,7 +71,11 @@ export default function Cart(second) {
                         <p className="text-gray-500">Total:</p> <span className="ml-auto">111</span>
                     </div>
                 </div>
-                <Link href={'/checkout'} className="btn bg-black text-white text-sm w-full uppercase">Proceed to checkout</Link>
+                <Link
+                    href={"/checkout"}
+                    className="btn bg-black text-white text-sm w-full uppercase">
+                    Proceed to checkout
+                </Link>
             </section>
         </div>
     );
