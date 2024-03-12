@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import prisma from "@/app/lib/prisma";
-import getCartProductsInfo from "@/app/func/getCartProductsInfo";
-import clearCart from "@/app/checkout/func/clearCart";
+import { getCartProductsInfo } from "@/app/func/cart";
+import { clearCart } from "@/app/func/cart";
 import { redirect } from "next/navigation";
 
 export default async function createOrder(prevState, formData) {

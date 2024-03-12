@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse, NextRequest } from "next/server";
-
-const prisma = new PrismaClient();
+import { NextResponse } from "next/server";
+import prisma from "@/app/lib/prisma";
 
 export async function GET(request, { params }) {
     const productId = params.id;

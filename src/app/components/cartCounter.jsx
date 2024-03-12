@@ -7,7 +7,7 @@ export default function CartCounter({ cart }) {
     const [numberOfProductsInCart, setNumberOfProductsInCart] = useState(0);
 
     useEffect(() => {
-        if (cart) {
+        if (cart || Object.keys(cart).length > 0) {
             const totalAmount = Object.values(cart).reduce((accumulator, currProd) => {
                 return accumulator + currProd;
             });

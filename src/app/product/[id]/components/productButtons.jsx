@@ -1,12 +1,14 @@
 "use client";
 
-import addToCart from "@/app/shop/func/addToCart";
+import { addToCart } from "@/app/func/cart";
 import { useState } from "react";
 
 export default function ProductButtons({ productId }) {
     const [quantity, setQuantity] = useState(1);
 
-    console.log("Button render");
+    const [isAdded, setIsAdded] = useState(false);
+
+    const [notAdded, setNotAdded] = useState(false);
 
     function increment() {
         setQuantity(quantity + 1);
@@ -24,14 +26,29 @@ export default function ProductButtons({ productId }) {
         setQuantity(Number(event.target.value));
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         const formData = new FormData(e.target);
 
         const amount = formData.get("amount");
 
-        addToCart(productId, amount);
+        const addedToCart = await addToCart(productId, amount);
+        console.log("🚀 ~ handleSubmit ~ addedToCart:", addedToCart);
+
+        if (addedToCart) {
+            setIsAdded(true);
+
+            setTimeout(() => {
+                setIsAdded(false);
+            }, 2000);
+        } else {
+            setNotAdded(true);
+
+            setTimeout(() => {
+                setNotAdded(false);
+            }, 2000);
+        }
     }
 
     return (
@@ -62,7 +79,7 @@ export default function ProductButtons({ productId }) {
             </div>
             <button
                 type="submit"
-                className="add-cart black-btn uppercase">
+                className={`add-cart black-btn uppercase ${isAdded ? "added" : undefined} ${notAdded ? "not-added" : undefined}`}>
                 Add to cart
             </button>
         </form>

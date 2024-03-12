@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import addToCart from "../func/addToCart";
+import { addToCart } from "@/app/func/cart";
 
 export default function ProductActions({ productId }) {
     function handleClick() {
