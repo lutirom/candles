@@ -16,5 +16,5 @@ export default function CartCounter({ cart }) {
         }
     }, [cart]);
 
-    return <p className={`${Object.keys(cart).length > 0 ? "flex" : "hidden"} cart-counter bg-red-600 text-xs`}>{numberOfProductsInCart}</p>;
+    return <p className={`${cart && Object.keys(cart).length > 0 ? "flex" : "hidden"} cart-counter bg-red-600 text-xs`}>{numberOfProductsInCart}</p>;
 }

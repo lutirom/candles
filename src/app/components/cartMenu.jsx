@@ -48,7 +48,7 @@ export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
         );
     });
 
-    if (Object.keys(cartProducts).length > 0) {
+    if (cartProducts && Object.keys(cartProducts).length > 0) {
         return (
             <div className={`${cartOpen ? "active" : undefined} menu cart-menu`}>
                 <svg
