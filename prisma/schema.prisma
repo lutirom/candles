@@ -35,3 +35,11 @@ model Order_products {
   product_id Int
   amount Int
 }
+
+model Cities {
+  id Int @id @default(autoincrement())
+  name String
+  np_ref String
+  np_area_ref String @default("")
+  fast_city Int @default(0)
+}

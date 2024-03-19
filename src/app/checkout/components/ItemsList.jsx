@@ -5,7 +5,7 @@ export default function ItemsList({ items, optionType, chooseOption }) {
         return (
             <div
                 className="flex items-center justify-between  py-1 px-3 bg-white border-b border-gray-50"
-                onClick={() => chooseOption(optionType, { ref: item.Ref, name: `${item.Description} ${item.RegionType ? item.RegionType : ""}` })}
+                onClick={() => chooseOption(optionType, { ref: item.Ref, name: `${item.Description} ${item.RegionType ? item.RegionType : ""}`, cityCenter: item.Area ? true : false })}
                 key={item.Ref}>
                 <p>
                     {item.Description} {item.RegionType}

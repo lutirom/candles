@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import prisma from "@/app/lib/prisma";
-import { redirect } from "next/navigation";
 import { clearCart } from "@/app/func/cart";
 import { getCartProductsInfo } from "@/app/func/cart";
 
@@ -23,7 +22,8 @@ export async function validateOrder(prevState, formData) {
         email: z.string().email(),
         npArea: z.string().min(1, { message: "Area is required" }),
         npSettlementRegion: z.string(),
-        npSettlement: z.string(),
+        npSettlement: z.string().optional(),
+        npCityCenter: z.string().optional(),
         npDepartment: z.string().min(1, { message: "Department is required" }),
     });
 
@@ -34,25 +34,31 @@ export async function validateOrder(prevState, formData) {
         npArea: formData.get("npArea"),
         npSettlementRegion: formData.get("npSettlementRegion"),
         npSettlement: formData.get("npSettlement"),
+        npCityCenter: formData.get("npCityCenter"),
         npDepartment: formData.get("npDepartment"),
     };
 
     const results = schema.safeParse(data);
 
     if (!results.success) {
+        console.log(results.error);
         return { areaError: results.error.format().npArea?._errors.join(), dpError: results.error.format().npDepartment?._errors.join() };
     }
+
+    saveOrder(data, products);
 
     return results;
 }
 
 export async function saveOrder(orderData, products) {
+    //TODO: створити механізм зберігання замовлення до оплати
+
     try {
         const order = await prisma.orders.create({
             data: {
                 client_name: orderData.name,
                 client_email: orderData.email,
-                delivery_info: `${orderData.npSettlement} (${orderData.npSettlementRegion}, ${orderData.npArea}), ${orderData.npDepartment}`,
+                delivery_info: `${orderData?.npSettlement} ${orderData?.npCityCenter} (${orderData?.npSettlementRegion}, ${orderData.npArea}), ${orderData.npDepartment}`,
             },
         });
 
@@ -72,6 +78,4 @@ export async function saveOrder(orderData, products) {
     }
 
     await clearCart();
-
-    redirect("/thank-you");
 }

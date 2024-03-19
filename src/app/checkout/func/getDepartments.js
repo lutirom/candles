@@ -1,5 +1,5 @@
-export default async function getDepartments(settlementRef) {
-    const req = await fetch(`/api/np/get-departments/${settlementRef}`, {
+export default async function getDepartments(ref) {
+    const req = await fetch(`/api/np/get-departments/${ref}`, {
         method: "POST",
     });
 

@@ -7,24 +7,28 @@ import Image from "next/image";
 
 export default function NovaPoshtaSelect({ npCities }) {
     //TODO: додати швидкі міста та міста в областях поки місто не вибирається
-    //зробити скролл угору після вибору області
 
     const npArea = useRef();
     const npSettlementRegion = useRef();
     const npSettlement = useRef();
     const npDepartment = useRef();
+    const npCityCenter = useRef();
+
+    const selectNpMenu = useRef();
 
     const currentOptions = useRef({
         names: {
             npArea: String,
             npSettlementRegion: String,
             npSettlement: String,
+            npCityCenter: String,
             npDepartment: String,
         },
         refs: {
             npArea: String,
             npSettlementRegion: String,
             npSettlement: String,
+            npCityCenter: String,
             npDepartment: String,
         },
     });
@@ -47,7 +51,10 @@ export default function NovaPoshtaSelect({ npCities }) {
     async function openDpMenu() {
         setPending(true);
 
-        const departments = await getDepartments(currentOptions.current.refs.npSettlement).then((res) => {
+        const ref = typeof currentOptions.current.refs.npCityCenter === "string" ? currentOptions.current.refs.npCityCenter : currentOptions.current.refs.npSettlement;
+        console.log("🚀 ~ openDpMenu ~ currentOptions.current:", currentOptions.current);
+
+        const departments = await getDepartments(ref, typeof currentOptions.current.refs.npCityCenter === "string").then((res) => {
             setPending(false);
             return res;
         });
@@ -81,6 +88,7 @@ export default function NovaPoshtaSelect({ npCities }) {
             npArea: String,
             npSettlementRegion: String,
             npSettlement: String,
+            npCity: String,
             npDepartment: String,
         };
         setNpDeliveryLocation((prevLocations) => {
@@ -95,6 +103,23 @@ export default function NovaPoshtaSelect({ npCities }) {
                 ),
             };
         });
+    }
+
+    function clearSettlement() {
+        currentOptions.current.names.npSettlementRegion = String;
+        currentOptions.current.refs.npSettlementRegion = String;
+        currentOptions.current.names.npSettlement = String;
+        currentOptions.current.refs.npSettlement = String;
+
+        npSettlement.current.value = "";
+        npSettlementRegion.current.value = "";
+    }
+
+    function clearCityCenter() {
+        currentOptions.current.names.npCityCenter = String;
+        currentOptions.current.refs.npCityCenter = String;
+
+        npCityCenter.current.value = "";
     }
 
     async function previousOptions() {
@@ -127,6 +152,7 @@ export default function NovaPoshtaSelect({ npCities }) {
     }
 
     async function chooseOption(optionType, option) {
+        selectNpMenu.current.scrollTop = 0;
         setPending(true);
         if (optionType === "area") {
             const settlementRegions = await getSettlements(option.ref).then((res) => {
@@ -153,12 +179,34 @@ export default function NovaPoshtaSelect({ npCities }) {
         }
 
         if (optionType === "settlementRegion") {
+            if (option.cityCenter) {
+                clearSettlement();
+
+                currentOptions.current.names.npCityCenter = option.name;
+                currentOptions.current.refs.npCityCenter = option.ref;
+                npCityCenter.current.value = option.name;
+
+                const currentOptionsName = { ...currentOptions.current.names };
+
+                setNpDeliveryLocation((prevLocations) => {
+                    return { ...prevLocations, names: currentOptionsName };
+                });
+
+                setPending(false);
+                closeNpMenu();
+
+                return;
+            }
+
+            clearCityCenter();
+
+            currentOptions.current.names.npSettlementRegion = option.name;
+            currentOptions.current.refs.npSettlementRegion = option.ref;
+
             const settlements = await getCities(option.ref).then((res) => {
                 setPending(false);
                 return res;
             });
-            currentOptions.current.names.npSettlementRegion = option.name;
-            currentOptions.current.refs.npSettlementRegion = option.ref;
 
             setNpDeliveryLocation((prevLocations) => {
                 return {
@@ -209,7 +257,13 @@ export default function NovaPoshtaSelect({ npCities }) {
             <div
                 className="flex justify-between p-3 border w-full mt-4"
                 onClick={openNpMenu}>
-                <p className={`${npDeliveryLocation.names?.npSettlement ? "text-gray-500" : "text-gray-300"}`}>{npDeliveryLocation.names?.npSettlement ? ` ${npDeliveryLocation.names.npSettlement} (${npDeliveryLocation.names.npSettlementRegion}, ${npDeliveryLocation.names.npArea})` : "Area"}</p>
+                <p className={`${npDeliveryLocation.names?.npSettlement ? "text-gray-500" : "text-gray-300"}`}>
+                    {typeof npDeliveryLocation.names?.npSettlement === "string"
+                        ? ` ${npDeliveryLocation.names.npSettlement} (${npDeliveryLocation.names.npSettlementRegion}, ${npDeliveryLocation.names.npArea})`
+                        : typeof npDeliveryLocation.names?.npCityCenter === "string"
+                        ? `${npDeliveryLocation.names.npCityCenter} (${npDeliveryLocation.names.npArea})`
+                        : "Area"}
+                </p>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -238,7 +292,9 @@ export default function NovaPoshtaSelect({ npCities }) {
                     />
                 </svg>
             </div>
-            <div className={`${npMenuOpen ? "fixed" : "hidden"}  menu checkout-menu text-2xl`}>
+            <div
+                className={`${npMenuOpen ? "fixed" : "hidden"}  menu checkout-menu text-2xl`}
+                ref={selectNpMenu}>
                 <div className="flex justify-between -mt-3 mb-3">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -287,6 +343,11 @@ export default function NovaPoshtaSelect({ npCities }) {
                     type="hidden"
                     name="npDepartment"
                     ref={npDepartment}
+                />
+                <input
+                    type="hidden"
+                    name="npCityCenter"
+                    ref={npCityCenter}
                 />
             </div>
             <div
