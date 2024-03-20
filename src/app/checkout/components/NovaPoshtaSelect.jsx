@@ -6,7 +6,7 @@ import ItemsList from "./ItemsList";
 import Image from "next/image";
 
 export default function NovaPoshtaSelect({ npCities }) {
-    //TODO: додати швидкі міста та міста в областях поки місто не вибирається
+    //TODO: оптимізувати нову пошту
 
     const npArea = useRef();
     const npSettlementRegion = useRef();
@@ -52,7 +52,6 @@ export default function NovaPoshtaSelect({ npCities }) {
         setPending(true);
 
         const ref = typeof currentOptions.current.refs.npCityCenter === "string" ? currentOptions.current.refs.npCityCenter : currentOptions.current.refs.npSettlement;
-        console.log("🚀 ~ openDpMenu ~ currentOptions.current:", currentOptions.current);
 
         const departments = await getDepartments(ref, typeof currentOptions.current.refs.npCityCenter === "string").then((res) => {
             setPending(false);
@@ -85,6 +84,13 @@ export default function NovaPoshtaSelect({ npCities }) {
 
     function resetNpMenu() {
         currentOptions.current.names = {
+            npArea: String,
+            npSettlementRegion: String,
+            npSettlement: String,
+            npCity: String,
+            npDepartment: String,
+        };
+        currentOptions.current.refs = {
             npArea: String,
             npSettlementRegion: String,
             npSettlement: String,

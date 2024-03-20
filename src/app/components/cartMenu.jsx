@@ -10,8 +10,6 @@ import { deleteFromCart } from "../func/cart";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
-    console.log("renderCartMenu");
-
     const orderTotal = cartProducts
         ?.reduce((sum, currentProduct) => {
             return sum + currentProduct.price * currentProduct.amount;

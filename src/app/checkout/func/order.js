@@ -41,7 +41,6 @@ export async function validateOrder(prevState, formData) {
     const results = schema.safeParse(data);
 
     if (!results.success) {
-        console.log(results.error);
         return { areaError: results.error.format().npArea?._errors.join(), dpError: results.error.format().npDepartment?._errors.join() };
     }
 

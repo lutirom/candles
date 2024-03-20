@@ -34,7 +34,6 @@ export default function ProductButtons({ productId }) {
         const amount = formData.get("amount");
 
         const addedToCart = await addToCart(productId, amount);
-        console.log("🚀 ~ handleSubmit ~ addedToCart:", addedToCart);
 
         if (addedToCart) {
             setIsAdded(true);

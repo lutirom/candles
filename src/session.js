@@ -37,8 +37,6 @@ export async function updateSession(req) {
         expires: parsed.expires,
     });
 
-    // console.log(parsed);
-
     return res;
 }
 

@@ -3,7 +3,6 @@ import Link from "next/link";
 import CartCounter from "./cartCounter";
 
 export default function DesktopHeader({ scrolled, toggleCart, cart }) {
-    console.log("renderDesktopHeader");
     const currentPath = usePathname();
 
     return (

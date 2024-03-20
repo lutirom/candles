@@ -43,15 +43,13 @@ export async function getCartProductsInfo() {
 }
 
 export async function addToCart(id, amount) {
-    const session = await getSession();
-
-    //TODO: find way to handle adding item to cart immediately after session created
-    //      this is situation when session wasn't created before hitting button add to cart
+    let session = await getSession();
 
     if (!session) {
-        createSession();
+        const res = await createSession();
+        const newSession = res.cookies.get("session").value;
 
-        return;
+        session = newSession;
     }
 
     const parsed = await decrypt(session);

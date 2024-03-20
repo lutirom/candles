@@ -8,7 +8,6 @@ export default async function getAreaCenter(areaRef) {
             np_area_ref: areaRef,
         },
     });
-    console.log("🚀 ~ getAreaCenter ~ areaCenterDb:", areaCenterDb);
 
     if (areaCenterDb.np_ref === null) {
         return false;
@@ -19,7 +18,6 @@ export default async function getAreaCenter(areaRef) {
     });
 
     const data = await req.json();
-    console.log("🚀 ~ getAreaCenter ~ data:", data);
 
     return data.data[0];
 }

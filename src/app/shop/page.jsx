@@ -13,7 +13,6 @@ const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700
 const res = await fetch(`${process.env.APP_URL}/api/products`, { next: { revalidate: 3600 } });
 
 const products = await res.json();
-console.log("🚀 ~ products:", products);
 
 export default function Shop({ searchParams }) {
     const page = searchParams["page"] ?? 1;

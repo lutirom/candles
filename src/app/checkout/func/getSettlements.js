@@ -8,7 +8,6 @@ export default async function getSettlements(areaRef) {
     const data = await req.json();
 
     const areaCenter = await getAreaCenter(areaRef);
-    console.log("🚀 ~ getSettlements ~ areaCenter:", areaCenter, areaRef);
 
     if (areaCenter) {
         data.data.unshift(areaCenter);
