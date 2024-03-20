@@ -46,7 +46,6 @@ export async function validateOrder(prevState, formData) {
     }
 
     results.orderDbData = await saveOrder(data, products);
-    console.log("🚀 ~ validateOrder ~ results:", results);
 
     return results;
 }
@@ -58,7 +57,7 @@ export async function saveOrder(orderData, products) {
         const order = await prisma.orders.create({
             data: {
                 client_name: orderData.name,
-                client_lastname: orderData?.lastname,
+                client_lastname: orderData?.lastName,
                 client_email: orderData.email,
                 delivery_info: `${orderData?.npSettlement} ${orderData?.npCityCenter} (${orderData?.npSettlementRegion}, ${orderData.npArea}), ${orderData.npDepartment}`,
             },
