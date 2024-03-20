@@ -8,6 +8,7 @@ import OrderInfo from "./OrderInfo";
 import NovaPoshtaSelect from "./NovaPoshtaSelect";
 import wayForPay from "../func/wayForPay";
 import WayForPayScript from "./WayForPayScript";
+import { useRouter } from "next/navigation";
 
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -22,6 +23,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
 
     const [state, formAction] = useFormState(validateOrder, initialState);
 
+    const router = useRouter();
     useEffect(() => {
         if (state?.areaError?.length > 1) {
             areaError.current.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -32,9 +34,9 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
             dpError.current.scrollIntoView({ behavior: "smooth", block: "center" });
             return;
         }
-
+        console.log("🚀 ~ useEffect ~ state:", state);
         if (state?.success) {
-            wayForPay(state.data, cartProductsInfo);
+            wayForPay(state.data, state.orderDbData.orderProducts, state.orderDbData.order.id, router);
         }
     }, [state]);
 

@@ -6,6 +6,7 @@ import { clearCart } from "@/app/func/cart";
 import { getCartProductsInfo } from "@/app/func/cart";
 
 export async function validateOrder(prevState, formData) {
+    console.log("🚀 ~ validateOrder ~ formData:", formData.get("npArea"));
     const products = await getCartProductsInfo();
 
     if (!products) {
@@ -44,7 +45,8 @@ export async function validateOrder(prevState, formData) {
         return { areaError: results.error.format().npArea?._errors.join(), dpError: results.error.format().npDepartment?._errors.join() };
     }
 
-    saveOrder(data, products);
+    results.orderDbData = await saveOrder(data, products);
+    console.log("🚀 ~ validateOrder ~ results:", results);
 
     return results;
 }
@@ -56,6 +58,7 @@ export async function saveOrder(orderData, products) {
         const order = await prisma.orders.create({
             data: {
                 client_name: orderData.name,
+                client_lastname: orderData?.lastname,
                 client_email: orderData.email,
                 delivery_info: `${orderData?.npSettlement} ${orderData?.npCityCenter} (${orderData?.npSettlementRegion}, ${orderData.npArea}), ${orderData.npDepartment}`,
             },
@@ -71,10 +74,19 @@ export async function saveOrder(orderData, products) {
             }),
         });
 
+        const data = {
+            order: order,
+            orderProducts: products,
+        };
+
+        await clearCart();
+
         console.log("Order saved successfully");
+
+        return data;
     } catch (err) {
         console.log("Error while saving - ", err);
-    }
 
-    await clearCart();
+        return { error: err };
+    }
 }

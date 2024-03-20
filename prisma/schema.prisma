@@ -25,6 +25,7 @@ model Orders {
   client_email String
   delivery_info String
   products Order_products[]
+  invoice Invoices[]
 }
 
 model Order_products {
@@ -43,3 +44,10 @@ model Cities {
   np_area_ref String @default("")
   fast_city Int @default(0)
 }
+
+model Invoices {
+  id Int @id @default(autoincrement())
+  order Orders @relation(fields: order_id, references: [id])
+  order_id Int
+}
+

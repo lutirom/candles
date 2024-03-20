@@ -18,6 +18,7 @@ export async function getCartProductsInfo() {
     console.log("Getting Cart Products");
 
     const cart = await getCart();
+    console.log("🚀 ~ getCartProductsInfo ~ cart:", cart);
 
     if (!cart) {
         return;

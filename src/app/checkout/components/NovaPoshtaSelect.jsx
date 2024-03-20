@@ -90,13 +90,7 @@ export default function NovaPoshtaSelect({ npCities }) {
             npCity: String,
             npDepartment: String,
         };
-        currentOptions.current.refs = {
-            npArea: String,
-            npSettlementRegion: String,
-            npSettlement: String,
-            npCity: String,
-            npDepartment: String,
-        };
+
         setNpDeliveryLocation((prevLocations) => {
             return {
                 ...prevLocations,
@@ -167,7 +161,6 @@ export default function NovaPoshtaSelect({ npCities }) {
             });
 
             currentOptions.current.names.npArea = option.name;
-
             currentOptions.current.refs.npArea = option.ref;
 
             setNpDeliveryLocation((prevLocations) => {
@@ -191,6 +184,7 @@ export default function NovaPoshtaSelect({ npCities }) {
                 currentOptions.current.names.npCityCenter = option.name;
                 currentOptions.current.refs.npCityCenter = option.ref;
                 npCityCenter.current.value = option.name;
+                npArea.current.value = currentOptions.current.names.npArea;
 
                 const currentOptionsName = { ...currentOptions.current.names };
 

@@ -1,10 +1,13 @@
 "use client";
 
-import { redirect } from "next/navigation";
 import getSignature from "./getSignature";
+import getInvoiceId from "./getInvoiceId";
 
-export default async function wayForPay(data, products) {
+export default async function wayForPay(data, products, orderId, router) {
     //TODO: створити таблицю інвойсів
+    const invoiceId = await getInvoiceId(orderId);
+
+    const invoice = `CO${invoiceId}`;
 
     const productTotalPrice = products.reduce((sum, currentProduct) => {
         return sum + currentProduct.price * currentProduct.amount;
@@ -22,7 +25,7 @@ export default async function wayForPay(data, products) {
         return product.amount;
     });
 
-    const string = `123_com_ua;123.com.ua;DH78301215665;1415379863;${productTotalPrice};UAH;${arrProductNames.join(";")};${arrProductAmount.join(";")};${arrProductPrices.join(";")}`;
+    const string = `123_com_ua;123.com.ua;${invoice};1415379863;${productTotalPrice};UAH;${arrProductNames.join(";")};${arrProductAmount.join(";")};${arrProductPrices.join(";")}`;
 
     const signature = await getSignature(string);
 
@@ -33,7 +36,7 @@ export default async function wayForPay(data, products) {
         merchantDomainName: "123.com.ua",
         authorizationType: "SimpleSignature",
         merchantSignature: signature,
-        orderReference: "DH78301215665",
+        orderReference: invoice,
         orderDate: "1415379863",
         amount: productTotalPrice,
         currency: "UAH",
@@ -50,9 +53,10 @@ export default async function wayForPay(data, products) {
 
     function closeWayForPay(e) {
         if (e.data == "WfpWidgetEventApproved") {
+            console.log("WfpWidgetEventApproved");
             // TODO: додати статус до order і міняти його тут після оплати
             wayForPay.closeit();
-            redirect("/thank-you");
+            router.push("/thank-you");
         }
     }
 

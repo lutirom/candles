@@ -8,6 +8,7 @@ import { getCartProductsInfo } from "../func/cart";
 import FormCheckout from "./components/FormCheckout";
 
 const cartProductsInfo = await getCartProductsInfo();
+console.log("🚀 ~ cartProductsInfo:", cartProductsInfo);
 
 const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, { method: "POST" });
 
