@@ -6,7 +6,6 @@ import { clearCart } from "@/app/func/cart";
 import { getCartProductsInfo } from "@/app/func/cart";
 
 export async function validateOrder(prevState, formData) {
-    console.log("🚀 ~ validateOrder ~ formData:", formData.get("npArea"));
     const products = await getCartProductsInfo();
 
     if (!products) {
@@ -51,7 +50,7 @@ export async function validateOrder(prevState, formData) {
 }
 
 export async function saveOrder(orderData, products) {
-    //TODO: створити механізм зберігання замовлення до оплати
+    //TODO: створити механізм зберігання замовлення до натиску кнопки оформити замовлення
 
     try {
         const order = await prisma.orders.create({

@@ -1,35 +1,16 @@
-import Link from "next/link";
-import { v4 as uuidv4 } from 'uuid';
+import usePagination from "./../hooks/usePagination";
 
 export default function Pagination({ page, perPage, products }) {
+    const numberOfPages = Math.ceil(products.length / perPage);
 
-    const pagination = []
+    const params = {
+        page: page,
+        perPage: perPage,
+        numberOfPages: numberOfPages,
+        size: 2,
+    };
 
-    for (let i = 1; i <= Math.ceil(products.length/perPage); i++) {
+    const pagination = usePagination(params);
 
-        if (i === Number(page)) {
-
-            pagination.push(<p key={uuidv4()} style={{ lineHeight: '1' }} className="px-4 py-3 text-gray-400 bg-[var(--highlights)] text-white">{i}</p>);
-
-        } else {
-
-            pagination.push(<Link key={uuidv4()} href={{ 
-                pathname: '/shop',
-                query: {
-                    page: i,
-                    perPage: perPage
-                }
-            }} style={{ lineHeight: '1' }} className="px-4 py-3 text-gray-400 hover:bg-[var(--highlights)] hover:text-white">{i}</Link>)
-        }
-    }
-
-    return (
-        <>
-
-            {
-                pagination
-            }
-
-        </>
-    )
+    return <>{pagination}</>;
 }

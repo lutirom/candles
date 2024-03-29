@@ -4,7 +4,6 @@ import getSignature from "./getSignature";
 import getInvoiceId from "./getInvoiceId";
 
 export default async function wayForPay(data, products, orderId, router) {
-    //TODO: створити таблицю інвойсів
     const invoiceId = await getInvoiceId(orderId);
 
     const invoice = `CO${invoiceId}`;
@@ -53,7 +52,6 @@ export default async function wayForPay(data, products, orderId, router) {
 
     function closeWayForPay(e) {
         if (e.data == "WfpWidgetEventApproved") {
-            console.log("WfpWidgetEventApproved");
             // TODO: додати статус до order і міняти його тут після оплати
             wayForPay.closeit();
             router.push("/thank-you");

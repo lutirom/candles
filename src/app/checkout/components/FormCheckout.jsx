@@ -34,7 +34,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
             dpError.current.scrollIntoView({ behavior: "smooth", block: "center" });
             return;
         }
-        console.log("🚀 ~ useEffect ~ state:", state);
+
         if (state?.success) {
             wayForPay(state.data, state.orderDbData.orderProducts, state.orderDbData.order.id, router);
         }

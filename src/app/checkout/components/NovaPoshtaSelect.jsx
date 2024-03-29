@@ -6,7 +6,7 @@ import ItemsList from "./ItemsList";
 import Image from "next/image";
 
 export default function NovaPoshtaSelect({ npCities }) {
-    //TODO: оптимізувати нову пошту
+    //TODO: оптимізувати код нової пошти
 
     const npArea = useRef();
     const npSettlementRegion = useRef();
