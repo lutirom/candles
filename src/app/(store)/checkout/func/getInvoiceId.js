@@ -1,5 +1,5 @@
 "use server";
-import prisma from "../../lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 export default async function getInvoiceId(orderId) {
     const invoice = await prisma.invoices.create({

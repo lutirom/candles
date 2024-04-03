@@ -1,9 +1,21 @@
 import { NextResponse } from "next/server";
 
-export default async function getProducts(params) {
+export default async function getProducts(sortParams) {
     try {
-        if (params.sort === "priceAsc") {
+        let category;
+        if (sortParams.category) {
+            category = await prisma.categories.findFirst({
+                where: {
+                    name: sortParams.category,
+                },
+            });
+        }
+
+        if (sortParams.sort === "priceAsc") {
             const products = await prisma.products.findMany({
+                where: {
+                    category_id: category?.id,
+                },
                 orderBy: [
                     {
                         price: "asc",
@@ -13,8 +25,11 @@ export default async function getProducts(params) {
             return NextResponse.json(products, { status: 200 });
         }
 
-        if (params.sort === "priceDesc") {
+        if (sortParams.sort === "priceDesc") {
             const products = await prisma.products.findMany({
+                where: {
+                    category_id: category?.id,
+                },
                 orderBy: [
                     {
                         price: "desc",
@@ -25,6 +40,9 @@ export default async function getProducts(params) {
         }
 
         const products = await prisma.products.findMany({
+            where: {
+                category_id: category?.id,
+            },
             orderBy: [
                 {
                     id: "asc",

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import "@/app/assets/scss/_footer.scss";
+import "@/app/(store)/assets/scss/_footer.scss";
 
 export default function Footer() {
     return (

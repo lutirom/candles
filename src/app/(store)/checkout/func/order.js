@@ -2,8 +2,8 @@
 
 import { z } from "zod";
 import prisma from "@/app/lib/prisma";
-import { clearCart } from "@/app/func/cart";
-import { getCartProductsInfo } from "@/app/func/cart";
+import { clearCart } from "@/app/(store)/func/cart";
+import { getCartProductsInfo } from "@/app/(store)/func/cart";
 
 export async function validateOrder(prevState, formData) {
     const products = await getCartProductsInfo();

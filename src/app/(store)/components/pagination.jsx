@@ -1,4 +1,4 @@
-import usePagination from "./../hooks/usePagination";
+import usePagination from "@/app/hooks/usePagination";
 
 export default function Pagination({ page, perPage, products }) {
     const numberOfPages = Math.ceil(products.length / perPage);

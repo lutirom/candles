@@ -1,6 +1,6 @@
 "use client";
 
-import "@/app/assets/scss/_cart-menu.scss";
+import "@/app/(store)/assets/scss/_cart-menu.scss";
 
 import { Libre_Baskerville } from "next/font/google";
 import Image from "next/image";

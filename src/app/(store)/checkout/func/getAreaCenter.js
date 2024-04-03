@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "./../../lib/prisma";
+import prisma from "@/app/lib/prisma";
 
 export default async function getAreaCenter(areaRef) {
     const areaCenterDb = await prisma.cities.findFirst({

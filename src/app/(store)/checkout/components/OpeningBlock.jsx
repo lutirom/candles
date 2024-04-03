@@ -1,6 +1,6 @@
 "use client";
 
-import AnimateHeight from "@/app/func/animateHeight";
+import AnimateHeight from "@/app/(store)/func/animateHeight";
 import { useState } from "react";
 
 export default function OpeningBlock() {

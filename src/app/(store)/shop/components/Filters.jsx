@@ -4,7 +4,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
 export default function Filters({ page, perPage, products }) {
-    console.log("🚀 ~ Filters ~ perPage:", perPage);
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -24,13 +23,13 @@ export default function Filters({ page, perPage, products }) {
     );
 
     return (
-        <div className="filters-block pt-6 pb-2 sticky top-[72px] bg-white text-gray-400 z-10 container mx-auto">
-            <p className="text-[.8em]">
-                Showing {(page - 1) * perPage === 0 ? 1 : (page - 1) * perPage}-{(page - 1) * perPage + perPage > products.length ? products.length : (page - 1) * perPage + perPage} of {products.length} results
-            </p>
-            <div className="filters mt-4 text-sm flex justify-between">
-                <div className="flex">
-                    <span className="w-32 px-2 justify-between flex items-center relative">
+        <div className="filters-block pb-2 sticky top-[72px] bg-white text-gray-400 z-10 container mx-auto">
+            <div className="filters text-sm flex justify-between flex-wrap md:flex-nowrap">
+                <p className="text-[.9em] md:text-[1em] w-full md:w-fit">
+                    Showing {(page - 1) * perPage === 0 ? 1 : (page - 1) * perPage}-{(page - 1) * perPage + perPage > products.length ? products.length : (page - 1) * perPage + perPage} of {products.length} results
+                </p>
+                <div className="flex gap-4 lg:gap-8 mt-3 md:mt-0">
+                    <div className="filter-sort flex items-center relative">
                         Sort by {searchParams.get("sort") === "priceDesc" ? "more expensive" : searchParams.get("sort") === "priceAsc" ? "less expensive" : "default"}
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +42,7 @@ export default function Filters({ page, perPage, products }) {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <div className="w-full bg-white absolute top-full left-0 border *:py-1 *:px-2 *:cursor-pointer *:block">
+                        <div className="w-full folded-menu hidden bg-white absolute top-full left-0 border *:py-1 *:px-2 *:cursor-pointer *:block">
                             <p
                                 className="border-b hover:bg-gray-50"
                                 onClick={() => {
@@ -59,8 +58,8 @@ export default function Filters({ page, perPage, products }) {
                                 More expensive
                             </p>
                         </div>
-                    </span>
-                    <div className="ms-8 w-24 px-2 flex items-center justify-between relative">
+                    </div>
+                    <div className="filter-show px-2 flex items-center justify-between relative">
                         <p>Show {perPage}</p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +72,7 @@ export default function Filters({ page, perPage, products }) {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <div className="w-full bg-white absolute top-full left-0 border *:py-1 *:px-2 *:cursor-pointer *:block">
+                        <div className="w-full folded-menu hidden bg-white absolute top-full left-0 border *:py-1 *:px-2 *:cursor-pointer *:block">
                             <p
                                 className="border-b hover:bg-gray-50"
                                 onClick={() => {
@@ -104,21 +103,21 @@ export default function Filters({ page, perPage, products }) {
                             </p>
                         </div>
                     </div>
+                    <span className="flex items-center">
+                        Filters
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="w-5 h-5">
+                            <path
+                                fillRule="evenodd"
+                                d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </span>
                 </div>
-                <span className="flex items-center">
-                    Filters
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="w-5 h-5">
-                        <path
-                            fillRule="evenodd"
-                            d="M2.628 1.601C5.028 1.206 7.49 1 10 1s4.973.206 7.372.601a.75.75 0 0 1 .628.74v2.288a2.25 2.25 0 0 1-.659 1.59l-4.682 4.683a2.25 2.25 0 0 0-.659 1.59v3.037c0 .684-.31 1.33-.844 1.757l-1.937 1.55A.75.75 0 0 1 8 18.25v-5.757a2.25 2.25 0 0 0-.659-1.591L2.659 6.22A2.25 2.25 0 0 1 2 4.629V2.34a.75.75 0 0 1 .628-.74Z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
-                </span>
             </div>
         </div>
     );

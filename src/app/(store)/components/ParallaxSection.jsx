@@ -1,5 +1,4 @@
-import Image from "next/image";
-import "@/app/assets/scss/_section.scss";
+import "@/app/(store)/assets/scss/_section.scss";
 
 export default function ParallaxSection({ color, bgImg, text, children }) {
     return (

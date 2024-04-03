@@ -1,83 +1,17 @@
-import "@/app/shop/assets/shop.scss";
 import Image from "next/image";
-import { Libre_Baskerville } from "next/font/google";
-
-import Pagination from "./../components/pagination";
-import Link from "next/link";
-
 import Head from "./../components/head";
-import ProductActions from "./components/ProductActions";
-import Filters from "./components/Filters";
-import getProducts from "./func/getProducts";
-
+import { Libre_Baskerville } from "next/font/google";
+import Link from "next/link";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default async function Shop({ searchParams }) {
-    const page = searchParams["page"] ? Number(searchParams["page"]) : 1;
-
-    const perPage = searchParams["perPage"] ? Number(searchParams["perPage"]) : 12;
-
-    const start = (page - 1) * perPage;
-
-    const end = page * perPage;
-
-    const params = {
-        sort: searchParams["sort"],
-    };
-
-    const res = await getProducts(params);
-
-    const products = await res.json();
-
-    const productsOnPage = products.slice(start, end).map((product, index) => {
-        return (
-            <div
-                key={product.id}
-                className="product-wrapper">
-                <div className="product sale">
-                    <Link href={`/product/${product.id}/`}>
-                        <Image
-                            src={product.img}
-                            width={600}
-                            height={800}
-                            alt={`photo of ${product.name}`}></Image>
-                    </Link>
-                    <div className="product-actions">
-                        <ProductActions productId={product.id} />
-                    </div>
-                </div>
-                <div className="product-description">
-                    <p>{product.name}</p>
-                    <span className="text-gray-500">{product.price}</span>
-                </div>
-            </div>
-        );
-    });
-
+export default function ShopLayout({ children }) {
     return (
         <div className="shop-page">
             <Head name="Shop" />
 
-            <section className="products pt-2">
-                <div className="container mx-auto flex flex-col lg:flex-row-reverse lg:gap-12">
-                    <div className="w-full">
-                        <Filters
-                            page={page}
-                            perPage={perPage}
-                            products={products}
-                        />
-                        <div className="products-block">{productsOnPage}</div>
-                        <div className="flex justify-center mt-12">
-                            <Pagination
-                                searchParams={searchParams}
-                                page={page}
-                                perPage={perPage}
-                                products={products}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="sidebar mt-12">
+            <section className="products">
+                <div className="container mx-auto flex flex-col-reverse lg:flex-row gap-8">
+                    <div className="sidebar">
                         <div className="border w-full flex items-center p-3">
                             <input
                                 type="text"
@@ -102,24 +36,15 @@ export default async function Shop({ searchParams }) {
                         <div className="categories mt-12">
                             <h3 className={`${baskerville.className} text-2xl font-semibold`}>Categories</h3>
                             <div className="categories-items text-gray-400 ">
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
-                                <p>
-                                    Lorem <span className="ml-auto">(2)</span>
-                                </p>
+                                <Link href={`${process.env.APP_URL}/shop`}>
+                                    All <span className="ml-auto">(2)</span>
+                                </Link>
+                                <Link href={`${process.env.APP_URL}/shop/candles`}>
+                                    Candles <span className="ml-auto">(2)</span>
+                                </Link>
+                                <Link href={`${process.env.APP_URL}/shop/soap`}>
+                                    Soap <span className="ml-auto">(2)</span>
+                                </Link>
                             </div>
                         </div>
 
@@ -184,11 +109,8 @@ export default async function Shop({ searchParams }) {
                             </div>
                         </div>
                     </div>
+                    <div className="flex flex-col lg:flex-row-reverse lg:gap-12">{children}</div>
                 </div>
-            </section>
-
-            <section className="tags">
-                <div className="container mx-auto"></div>
             </section>
         </div>
     );

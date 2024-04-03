@@ -87,4 +87,28 @@
             }
         }
     }
+
+    .filter-sort,
+    .filter-show {
+        cursor: pointer;
+
+        .folded-menu {
+            width: 100%;
+            display: none;
+        }
+
+        svg {
+            transition: rotate 0.2s ease-in-out;
+        }
+
+        &:hover {
+            .folded-menu {
+                display: block;
+            }
+
+            svg {
+                rotate: x 180deg;
+            }
+        }
+    }
 }

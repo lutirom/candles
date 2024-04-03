@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import "@/app/assets/scss/_header.scss";
+import "@/app/(store)/assets/scss/_header.scss";
 import scroll from "../func/scroll";
 
 import CartMenu from "./cartMenu";

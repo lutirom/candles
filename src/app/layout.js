@@ -1,7 +1,5 @@
 import { Archivo } from "next/font/google";
 import "./globals.css";
-import HeaderWrapper from "./components/headerWrapper";
-import Footer from "./components/footer";
 
 const archivo = Archivo({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -14,11 +12,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={archivo.className}>
-                <main>
-                    <HeaderWrapper />
-                    {children}
-                    <Footer />
-                </main>
+                <main>{children}</main>
             </body>
         </html>
     );
