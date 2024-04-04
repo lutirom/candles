@@ -1,7 +1,6 @@
 import "@/app/(store)/shop/assets/shop.scss";
 
 import Pagination from "./../components/pagination";
-
 import Filters from "./components/Filters";
 import getProducts from "./func/getProducts";
 import ProductsGrid from "./components/ProductsGrid";

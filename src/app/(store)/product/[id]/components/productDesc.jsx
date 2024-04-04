@@ -1,6 +1,6 @@
 "use client";
 
-import AnimateHeight from "@/app/func/animateHeight";
+import AnimateHeight from "@/app/(store)/func/animateHeight";
 import { Libre_Baskerville } from "next/font/google";
 import Image from "next/image";
 import { useState } from "react";

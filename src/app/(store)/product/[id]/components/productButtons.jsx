@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCart } from "@/app/func/cart";
+import { addToCart } from "@/app/(store)/func/cart";
 import { useState } from "react";
 
 export default function ProductButtons({ productId }) {

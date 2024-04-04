@@ -7,13 +7,13 @@ import OpeningBlock from "./components/OpeningBlock";
 import { getCartProductsInfo } from "../func/cart";
 import FormCheckout from "./components/FormCheckout";
 
-const cartProductsInfo = await getCartProductsInfo();
+export default async function Checkout() {
+    const cartProductsInfo = await getCartProductsInfo();
 
-const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, { method: "POST" });
+    const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, { method: "POST" });
 
-const npCities = await res.json();
+    const npCities = await res.json();
 
-export default function Checkout() {
     revalidatePath("/checkout");
     return (
         <div className="checkout-page">

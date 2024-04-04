@@ -1,18 +1,18 @@
 import Head from "../components/head";
-import { getCartProductsInfo } from "@/app/func/cart";
+import { getCartProductsInfo } from "@/app/(store)/func/cart";
 import Products from "./components/products";
 import "./assets/scss/cart-page.scss";
 import Link from "next/link";
 
-const cartProducts = await getCartProductsInfo();
+export default async function Cart() {
+    const cartProducts = await getCartProductsInfo();
 
-const orderTotal = cartProducts
-    .reduce((sum, currentProduct) => {
-        return sum + currentProduct.price * currentProduct.amount;
-    }, 0)
-    .toFixed(2);
+    const orderTotal = cartProducts
+        .reduce((sum, currentProduct) => {
+            return sum + currentProduct.price * currentProduct.amount;
+        }, 0)
+        .toFixed(2);
 
-export default function Cart() {
     if (cartProducts.length === 0) {
         return (
             <div className="cart-page">

@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteFromCart } from "@/app/func/cart";
+import { deleteFromCart } from "@/app/(store)/func/cart";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 

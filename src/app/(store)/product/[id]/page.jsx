@@ -3,8 +3,7 @@ import "./assets/product.scss";
 import { Libre_Baskerville } from "next/font/google";
 import Head from "./../../components/head";
 import Image from "next/image";
-import ButtonQuantity from "./components/buttonQuantity";
-import Carousel from "@/app/components/Carousel";
+import Carousel from "@/app/(store)/components/Carousel";
 import ProductDesc from "./components/productDesc";
 import ProductButtons from "./components/productButtons";
 
@@ -36,7 +35,9 @@ export default async function Product({ params }) {
                                 </a>
                                 <h1 className="text-2xl">{product.name}</h1>
                                 <p className="mt-4 text-[var(--highlights)] text-2xl font-semibold">{product.price}</p>
-                                <p className="mt-4 text-sm text-gray-500">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus aliquam vitae perferendis quod voluptas sint dolorum molestias aspernatur reprehenderit. Incidunt sequi delectus repudiandae nulla facere vel labore laboriosam eligendi officia?</p>
+                                <p className="mt-4 text-sm text-gray-500">
+                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus aliquam vitae perferendis quod voluptas sint dolorum molestias aspernatur reprehenderit. Incidunt sequi delectus repudiandae nulla facere vel labore laboriosam eligendi officia?
+                                </p>
                             </div>
                             <div className="action-btns ">
                                 <ProductButtons productId={params.id} />
