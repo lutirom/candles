@@ -36,13 +36,13 @@ export default function ShopLayout({ children }) {
                         <div className="categories mt-12">
                             <h3 className={`${baskerville.className} text-2xl font-semibold`}>Categories</h3>
                             <div className="categories-items text-gray-400 ">
-                                <Link href={`${process.env.APP_URL}/shop`}>
+                                <Link href={`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/shop`}>
                                     All <span className="ml-auto">(2)</span>
                                 </Link>
-                                <Link href={`${process.env.APP_URL}/shop/candles`}>
+                                <Link href={`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/shop/candles`}>
                                     Candles <span className="ml-auto">(2)</span>
                                 </Link>
-                                <Link href={`${process.env.APP_URL}/shop/soap`}>
+                                <Link href={`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/shop/soap`}>
                                     Soap <span className="ml-auto">(2)</span>
                                 </Link>
                             </div>
