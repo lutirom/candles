@@ -11,7 +11,7 @@ const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700
 
 export default async function Product({ params }) {
     console.log(`${process.env.APP_URL}/api/get-product/${params.id}`);
-    const res = await fetch(`${process.env.NODE_ENV === "development" ? process.env.APP_URL : ""}/api/get-product/${params.id}`, {
+    const res = await fetch(`${process.env.NODE_ENV === "development" ? process.env.APP_URL : ""}api/get-product/${params.id}`, {
         cache: "no-cache",
     });
     console.log(res);
