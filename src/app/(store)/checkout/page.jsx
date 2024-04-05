@@ -10,11 +10,8 @@ import FormCheckout from "./components/FormCheckout";
 export default async function Checkout() {
     const cartProductsInfo = await getCartProductsInfo();
 
-    const res = await fetch(`${process.env.APP_URL}/api/np/get-areas`, {
+    const res = await fetch(`${process.env.NODE_ENV === "development" ? process.env.APP_URL : ""}/api/np/get-areas`, {
         method: "POST",
-        headers: {
-            Authorization: `Bearer ${process.env.VERCEL_ACCESS_TOKEN}`,
-        },
     });
 
     const npCities = await res.json();
