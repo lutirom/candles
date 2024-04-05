@@ -77,6 +77,7 @@ export default function ProductButtons({ productId }) {
                 </button>
             </div>
             <button
+                //TODO: задати фіксовану ширину кнопці
                 type="submit"
                 className={`add-cart black-btn uppercase ${isAdded ? "added" : undefined} ${notAdded ? "not-added" : undefined}`}>
                 Add to cart

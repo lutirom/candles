@@ -7,6 +7,7 @@ import { Libre_Baskerville } from "next/font/google";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function ThankYouSection() {
+    //TODO: зробить відлік
     const router = useRouter();
 
     useEffect(() => {

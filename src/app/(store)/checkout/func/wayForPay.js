@@ -2,6 +2,7 @@
 
 import getSignature from "./getSignature";
 import getInvoiceId from "./getInvoiceId";
+import { clearCart } from "@/app/(store)/func/cart";
 
 export default async function wayForPay(data, products, orderId, router) {
     const invoiceId = await getInvoiceId(orderId);
@@ -50,10 +51,16 @@ export default async function wayForPay(data, products, orderId, router) {
         straightWidget: true,
     });
 
-    function closeWayForPay(e) {
+    async function closeWayForPay(e) {
         if (e.data == "WfpWidgetEventApproved") {
             // TODO: додати статус до order і міняти його тут після оплати
+            await clearCart();
             wayForPay.closeit();
+            router.push("/thank-you");
+        }
+
+        if (e.data == "WfpWidgetEventClose") {
+            await clearCart();
             router.push("/thank-you");
         }
     }

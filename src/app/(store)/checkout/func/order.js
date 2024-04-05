@@ -77,8 +77,6 @@ export async function saveOrder(orderData, products) {
             orderProducts: products,
         };
 
-        await clearCart();
-
         console.log("Order saved successfully");
 
         return data;
