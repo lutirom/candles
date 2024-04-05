@@ -13,7 +13,7 @@ export default async function getAreaCenter(areaRef) {
         return false;
     }
 
-    const req = await fetch(`${process.env.APP_URL}/api/np/get-area-center/${areaCenterDb.np_ref}`, {
+    const req = await fetch(`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/api/np/get-area-center/${areaCenterDb.np_ref}`, {
         method: "POST",
     });
 
