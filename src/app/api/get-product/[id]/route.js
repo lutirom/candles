@@ -10,10 +10,24 @@ export async function GET(request, { params }) {
             },
         });
 
-        return NextResponse.json(product, { status: 200 });
+        return NextResponse.json(product, {
+            status: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            },
+        });
     } catch (err) {
         console.error(err);
 
-        return NextResponse.json(err, { status: 200 });
+        return NextResponse.json(err, {
+            status: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            },
+        });
     }
 }

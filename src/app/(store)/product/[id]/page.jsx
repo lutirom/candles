@@ -10,7 +10,7 @@ import ProductButtons from "./components/productButtons";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default async function Product({ params }) {
-    console.log(`https://${process.env.VERCEL_URL}}api/get-product/${params.id}`);
+    console.log(`https://${process.env.VERCEL_URL}/api/get-product/${params.id}`);
     const res = await fetch(`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/api/get-product/${params.id}`, {
         cache: "no-cache",
     });
