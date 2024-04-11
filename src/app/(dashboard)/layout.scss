@@ -1,0 +1,17 @@
+.dashboard {
+    --header-height: 5rem;
+
+    .dash-header {
+        height: var(--header-height);
+    }
+
+    .side-navigation,
+    .dash-body {
+        margin-top: var(--header-height);
+        min-height: calc(100svh - var(--header-height));
+    }
+
+    section {
+        padding: 1rem;
+    }
+}
