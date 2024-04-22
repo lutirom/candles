@@ -6,45 +6,50 @@ import { NextResponse } from "next/server";
 export default async function getProducts(sortParams) {
     try {
         let category;
-        if (sortParams.category) {
-            category = await prisma.categories.findFirst({
-                where: {
-                    name: sortParams.category,
-                },
-            });
-        }
-
-        if (sortParams.sort === "priceAsc") {
-            const products = await prisma.products.findMany({
-                where: {
-                    category_id: category?.id,
-                },
-                orderBy: [
-                    {
-                        price: "asc",
+        if (sortParams) {
+            if (sortParams.category) {
+                category = await prisma.categories.findFirst({
+                    where: {
+                        name: sortParams.category,
                     },
-                ],
-            });
-            return NextResponse.json(products, { status: 200 });
-        }
+                });
+            }
 
-        if (sortParams.sort === "priceDesc") {
-            const products = await prisma.products.findMany({
-                where: {
-                    category_id: category?.id,
-                },
-                orderBy: [
-                    {
-                        price: "desc",
+            if (sortParams.sort === "priceAsc") {
+                const products = await prisma.products.findMany({
+                    where: {
+                        category_id: category?.id,
+                        status: 1,
                     },
-                ],
-            });
-            return NextResponse.json(products, { status: 200 });
+                    orderBy: [
+                        {
+                            price: "asc",
+                        },
+                    ],
+                });
+                return NextResponse.json(products, { status: 200 });
+            }
+
+            if (sortParams.sort === "priceDesc") {
+                const products = await prisma.products.findMany({
+                    where: {
+                        category_id: category?.id,
+                        status: 1,
+                    },
+                    orderBy: [
+                        {
+                            price: "desc",
+                        },
+                    ],
+                });
+                return NextResponse.json(products, { status: 200 });
+            }
         }
 
         const products = await prisma.products.findMany({
             where: {
                 category_id: category?.id,
+                status: 1,
             },
             orderBy: [
                 {

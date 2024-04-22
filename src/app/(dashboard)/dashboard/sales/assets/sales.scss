@@ -1,0 +1,35 @@
+.sales-table {
+    .sales-head,
+    .sales-body {
+        align-items: center;
+        grid-template-columns: repeat(5, 1fr);
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        line-height: 1;
+    }
+
+    .sales-head {
+        display: grid;
+    }
+
+    .sales-body {
+        display: flex;
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .order {
+        display: grid;
+        grid-template-rows: min-content 0fr;
+        transition: grid-template-rows 500ms ease;
+
+        .order-details {
+            overflow: hidden;
+        }
+
+        &.opened {
+            grid-template-rows: min-content 1fr;
+        }
+    }
+}

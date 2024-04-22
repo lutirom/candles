@@ -7,7 +7,17 @@ export default async function getOrders() {
     try {
         const orders = await prisma.orders.findMany({
             include: {
-                products: true,
+                products: {
+                    select: {
+                        amount: true,
+                        product: {
+                            select: {
+                                price: true,
+                                name: true,
+                            },
+                        },
+                    },
+                },
             },
         });
 

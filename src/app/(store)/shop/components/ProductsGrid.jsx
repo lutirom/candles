@@ -14,7 +14,8 @@ export default function ProductsGrid({ products, start, end }) {
                             src={product.img}
                             width={600}
                             height={800}
-                            alt={`photo of ${product.name}`}></Image>
+                            alt={`photo of ${product.name}`}
+                            className=" aspect-[3/4] object-cover"></Image>
                     </Link>
                     <div className="product-actions">
                         <ProductActions productId={product.id} />

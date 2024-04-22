@@ -24,6 +24,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
     const [state, formAction] = useFormState(validateOrder, initialState);
 
     const router = useRouter();
+
     useEffect(() => {
         if (state?.areaError?.length > 1) {
             areaError.current.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -39,8 +40,6 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
             wayForPay(state.data, state.orderDbData.orderProducts, state.orderDbData.order.id, router);
         }
     }, [state]);
-
-    async function sendReq() {}
 
     return (
         <>

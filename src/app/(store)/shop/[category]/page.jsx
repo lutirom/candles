@@ -23,6 +23,7 @@ export default async function Shop({ searchParams, params }) {
     const res = await getProducts(sortParams);
 
     const products = await res.json();
+    console.log("🚀 ~ Shop ~ products:", products);
 
     return (
         <div className="w-full">
