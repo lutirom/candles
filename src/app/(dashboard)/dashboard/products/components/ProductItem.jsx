@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { hideProduct, showProduct } from "../../func/adminProducts";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function ProductItem({ product }) {
     const [hidden, setHidden] = useState(product.status === 1 ? false : true);
@@ -33,11 +34,16 @@ export default function ProductItem({ product }) {
                 src={product.img}
                 height={150}
                 width={150}
+                className=" aspect-[3/4] object-cover"
             />
             <p>{product.name}</p>
             <p>{product.price} грн</p>
             <div>
-                <button className="btn w-24 border hover:bg-black hover:text-white">Edit</button>
+                <Link
+                    href={`products/edit/${product.id}`}
+                    className="btn w-24 border border-green-700 hover:bg-green-600 hover:text-white">
+                    Edit
+                </Link>
                 {hidden ? (
                     <button
                         onClick={() => changeStatus(product)}

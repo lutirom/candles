@@ -1,5 +1,5 @@
-import ProductForm from "./components/productForm";
-import getCategories from "./func/getCategories";
+import ProductForm from "../components/productForm";
+import getCategories from "../func/getCategories";
 
 export default async function AddProduct() {
     const categories = await getCategories();

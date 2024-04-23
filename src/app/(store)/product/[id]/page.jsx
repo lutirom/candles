@@ -10,11 +10,9 @@ import ProductButtons from "./components/productButtons";
 const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default async function Product({ params }) {
-    console.log(`https://${process.env.VERCEL_URL}/api/get-product/${params.id}`);
     const res = await fetch(`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/api/get-product/${params.id}`, {
         cache: "no-cache",
     });
-    console.log(res);
 
     const product = await res.json();
 
@@ -39,9 +37,7 @@ export default async function Product({ params }) {
                                 </a>
                                 <h1 className="text-2xl">{product.name}</h1>
                                 <p className="mt-4 text-[var(--highlights)] text-2xl font-semibold">{product.price}</p>
-                                <p className="mt-4 text-sm text-gray-500">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus aliquam vitae perferendis quod voluptas sint dolorum molestias aspernatur reprehenderit. Incidunt sequi delectus repudiandae nulla facere vel labore laboriosam eligendi officia?
-                                </p>
+                                <p className="mt-4 text-sm text-gray-500">{product.full_desc}</p>
                             </div>
                             <div className="action-btns ">
                                 <ProductButtons productId={params.id} />

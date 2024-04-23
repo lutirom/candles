@@ -17,7 +17,7 @@ model Products {
   name          String            
   short_desc    String            @default("")
   full_desc     String            @default("")
-  img           String
+  img           String            @unique
   price         Float
   status        Int              @default(1)
   category Categories @relation(fields: [category_id], references: [id])

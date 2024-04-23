@@ -2,11 +2,11 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useFormState } from "react-dom";
-import validateProduct from "./../func/validateProduct";
+import validateProduct from "../func/validateProduct";
 
 import Select from "react-select";
 
-export default function ProductForm({ categories }) {
+export default function ProductForm({ categories, product }) {
     const initialState = {
         titleErr: "",
         imageErr: "",
@@ -16,11 +16,12 @@ export default function ProductForm({ categories }) {
     const titleErr = useRef();
     const imageErr = useRef();
     const priceErr = useRef();
-    const labelSuccess = useRef()
+    const labelSuccess = useRef();
 
     const fileInput = useRef();
+    const imageName = useRef();
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(product && product.img);
 
     const [state, formAction] = useFormState(validateProduct, initialState);
 
@@ -42,7 +43,7 @@ export default function ProductForm({ categories }) {
 
         if (state.success) {
             labelSuccess.current.scrollIntoView({ behavior: "smooth", block: "center" });
-            return
+            return;
         }
     }, [state]);
 
@@ -50,18 +51,23 @@ export default function ProductForm({ categories }) {
         if (file) {
             return;
         }
-
+        imageName.current.value = e.target.files[0].name;
         setFile(URL.createObjectURL(e.target.files[0]));
     }
 
     function deletePhoto() {
         fileInput.current.value = "";
+        imageName.current.value = "";
         setFile(null);
     }
 
     return (
         <>
-            <p className={`${state.success ? "block" : "hidden"} px-3 py-1 bg-green-200 rounded-md`} ref={labelSuccess}>Товар додано успішно</p>
+            <p
+                className={`${state.success ? "block" : "hidden"} px-3 py-1 bg-green-200 rounded-md`}
+                ref={labelSuccess}>
+                {product ? "Товар оновлено успішно" : "Товар додано успішно"}
+            </p>
             <form
                 className="mt-5 grid grid-cols-2 gap-5"
                 action={formAction}>
@@ -80,8 +86,15 @@ export default function ProductForm({ categories }) {
                     <input
                         type="text"
                         name="title"
+                        id="title"
                         className="block p-3 border w-full mt-2 rounded-sm"
                         placeholder="Напишіть назву"
+                        defaultValue={product && product.name}
+                    />
+                    <input
+                        type="hidden"
+                        name="productId"
+                        value={product && product.id}
                     />
                     <label
                         htmlFor="short-desc"
@@ -91,8 +104,10 @@ export default function ProductForm({ categories }) {
                     <input
                         type="text"
                         name="short-desc"
+                        id="short-desc"
                         className="block p-3 border w-full mt-2 rounded-sm"
                         placeholder="Напишіть короткий опис"
+                        defaultValue={product && product.short_desc}
                     />
                     <label
                         htmlFor="full-desc"
@@ -101,8 +116,10 @@ export default function ProductForm({ categories }) {
                     </label>
                     <textarea
                         name="full-desc"
+                        id="full-desc"
                         className="block h-44 p-3 border w-full mt-2 rounded-sm"
                         placeholder="Напишіть опис"
+                        defaultValue={product && product.full_desc}
                     />
                     <label
                         htmlFor="image"
@@ -124,6 +141,12 @@ export default function ProductForm({ categories }) {
                             name="image"
                             onChange={handleUploadImage}
                             ref={fileInput}
+                        />
+                        <input
+                            type="hidden"
+                            name="image-name"
+                            ref={imageName}
+                            value={file}
                         />
                         <div className="flex flex-col items-center justify-center space-y-3">
                             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -194,6 +217,9 @@ export default function ProductForm({ categories }) {
                         options={categories}
                         name="category"
                         defaultValue={categories.find((category) => {
+                            if (product) {
+                                return category.value === product.category_id && category;
+                            }
                             return category.value === 0 && category;
                         })}
                     />
@@ -211,8 +237,12 @@ export default function ProductForm({ categories }) {
                         {state?.priceErr}
                     </span>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*[.,]?[0-9]*"
                         name="price"
+                        id="price"
+                        defaultValue={product && product.price}
                         className="block p-3 border w-full mt-2 rounded-sm"
                         placeholder="Вкажіть ціну"
                     />
