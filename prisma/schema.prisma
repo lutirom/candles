@@ -63,3 +63,12 @@ model Categories {
   name String
   products Products[]
 }
+
+model Admin_users {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String 
+  name String
+  email String @unique
+  image String
+}

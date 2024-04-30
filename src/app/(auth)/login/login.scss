@@ -1,0 +1,45 @@
+section.login-page {
+    form {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        padding: 2rem;
+        width: 80%;
+        max-width: 500px;
+        height: 300px;
+        background-color: white;
+        position: absolute;
+        inset: 0;
+        margin: auto;
+    }
+
+    .input-group {
+        margin-top: 1rem;
+
+        label {
+            position: absolute;
+            top: 0.5rem;
+            left: 0;
+            transform-origin: 0;
+            z-index: 1;
+            transition: all 200ms ease-out;
+        }
+
+        input {
+            background-color: transparent;
+            position: relative;
+            z-index: 2;
+            &:focus {
+                outline: none;
+                border-color: #4f9afc;
+
+                & + label {
+                    translate: 0 -1.5rem;
+                    scale: 0.7;
+                    color: #4f9afc;
+                }
+            }
+        }
+    }
+}
