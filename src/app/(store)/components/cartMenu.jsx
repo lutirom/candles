@@ -2,12 +2,12 @@
 
 import "@/app/(store)/assets/scss/_cart-menu.scss";
 
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { deleteFromCart } from "../func/cart";
 
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
     const orderTotal = cartProducts
@@ -57,7 +57,7 @@ export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
                     onClick={toggleCart}>
                     <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
                 </svg>
-                <p className={`${baskerville.className} text-lg font-semibold`}>Shopping Cart</p>
+                <p className={`${nunito.className} text-lg font-semibold`}>Shopping Cart</p>
                 <div className="h-1/2 md:h-3/5 overflow-y-scroll">{orderHtml}</div>
                 <p className="mt-4">
                     <span className="font-semibold">Subtotal:</span> ${orderTotal}
@@ -90,7 +90,7 @@ export default function CartMenu({ cartProducts, cartOpen, toggleCart }) {
                 onClick={toggleCart}>
                 <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
             </svg>
-            <p className={`${baskerville.className} text-lg font-semibold`}>Shopping Cart</p>
+            <p className={`${nunito.className} text-lg font-semibold`}>Shopping Cart</p>
             <div className="h-full flex justify-center items-center flex-col">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

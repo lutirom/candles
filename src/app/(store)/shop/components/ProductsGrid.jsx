@@ -22,8 +22,8 @@ export default function ProductsGrid({ products, start, end }) {
                     </div>
                 </div>
                 <div className="product-description">
-                    <p>{product.name}</p>
-                    <span className="text-gray-500">{product.price}</span>
+                    <p className="text-lg font-medium">{product.name}</p>
+                    <span className="text-gray-500 text-xl">{product.price} грн</span>
                 </div>
             </div>
         );

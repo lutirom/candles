@@ -1,12 +1,12 @@
 import HeaderWrapper from "./components/headerWrapper";
 import Footer from "./components/footer";
-import { Archivo } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 
-const archivo = Archivo({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const robotoFlex = Roboto_Flex({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export default function StoreLayout({ children }) {
     return (
-        <body className={archivo.className}>
+        <body className={robotoFlex.className}>
             <main>
                 <HeaderWrapper />
                 {children}

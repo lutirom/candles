@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function ThankYouSection() {
     //TODO: зробить відлік
@@ -18,7 +18,7 @@ export default function ThankYouSection() {
     return (
         <section className="flex justify-center items-center">
             <div>
-                <p className={`${baskerville.className} text-xl text-center`}>Дякуємо за ваше замовлення</p>
+                <p className={`${nunito.className} text-xl text-center`}>Дякуємо за ваше замовлення</p>
                 <p className="mt-7 text-center">Перенаправлення на головну через...</p>
             </div>
         </section>

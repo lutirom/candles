@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { useFormState } from "react-dom";
 import { validateOrder } from "../func/order";
 import OrderInfo from "./OrderInfo";
@@ -10,7 +10,7 @@ import wayForPay from "../func/wayForPay";
 import WayForPayScript from "./WayForPayScript";
 import { useRouter } from "next/navigation";
 
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function FormCheckout({ npCities, cartProductsInfo }) {
     const initialState = {
@@ -49,7 +49,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
                 className="checkout-form"
                 action={formAction}>
                 <div className="credentials">
-                    <p className={`${baskerville.className} pb-2 text-xl tracking-tighter border-b`}>Billing details</p>
+                    <p className={`${nunito.className} pb-2 text-xl tracking-tighter border-b`}>Billing details</p>
                     <div className="name-block">
                         <div>
                             <label
@@ -120,7 +120,7 @@ export default function FormCheckout({ npCities, cartProductsInfo }) {
                 </div>
                 <div className="order-info">
                     <div className="lg:bg-gray-50 lg:pb-7 lg:p-6">
-                        <p className={`${baskerville.className} pb-2 mt-7 lg:mt-0 text-xl tracking-tighter border-b`}>Your order</p>
+                        <p className={`${nunito.className} pb-2 mt-7 lg:mt-0 text-xl tracking-tighter border-b`}>Your order</p>
                         <div className="mt-7 font-medium ">
                             <OrderInfo cartProductsInfo={cartProductsInfo} />
                         </div>

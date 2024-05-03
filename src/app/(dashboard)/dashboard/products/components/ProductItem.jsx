@@ -29,7 +29,7 @@ export default function ProductItem({ product }) {
     }
 
     return (
-        <div className="product flex justify-between items-center p-3 shadow-md">
+        <div className="product flex gap-8 justify-between items-center p-3 shadow-md *:flex-1 *:text-center">
             <Image
                 src={product.img}
                 height={150}
@@ -38,7 +38,9 @@ export default function ProductItem({ product }) {
             />
             <p>{product.name}</p>
             <p>{product.price} грн</p>
-            <div>
+            <p>{product.short_desc}</p>
+            <p>{product.full_desc}</p>
+            <div className="flex flex-col items-center">
                 <Link
                     href={`products/edit/${product.id}`}
                     className="btn w-24 border border-green-700 hover:bg-green-600 hover:text-white">

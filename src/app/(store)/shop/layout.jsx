@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Head from "./../components/head";
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 import Link from "next/link";
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export default function ShopLayout({ children }) {
     return (
@@ -34,7 +34,7 @@ export default function ShopLayout({ children }) {
                         </div>
 
                         <div className="categories mt-12">
-                            <h3 className={`${baskerville.className} text-2xl font-semibold`}>Categories</h3>
+                            <h3 className={`${nunito.className} text-2xl font-semibold`}>Categories</h3>
                             <div className="categories-items text-gray-400 ">
                                 <Link href={`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/shop`}>
                                     All <span className="ml-auto">(2)</span>
@@ -49,7 +49,7 @@ export default function ShopLayout({ children }) {
                         </div>
 
                         <div className="best-sellers mt-12">
-                            <h3 className={`${baskerville.className} text-2xl font-semibold`}>Best-Seller</h3>
+                            <h3 className={`${nunito.className} text-2xl font-semibold`}>Best-Seller</h3>
                             <div className="flex flex-col gap-5 mt-8">
                                 <div className="grid grid-cols-2 gap-4">
                                     <Image
@@ -94,7 +94,7 @@ export default function ShopLayout({ children }) {
                             </div>
                         </div>
                         <div className="tag mt-12">
-                            <h3 className={`${baskerville.className} text-2xl font-semibold`}>Tags</h3>
+                            <h3 className={`${nunito.className} text-2xl font-semibold`}>Tags</h3>
                             <div className="mt-5 text-gray-500">
                                 <span>Lorem, </span>
                                 <span>Lorem, </span>

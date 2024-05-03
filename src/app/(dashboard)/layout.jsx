@@ -1,15 +1,17 @@
-import { Archivo } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 import "./layout.scss";
 import Link from "next/link";
+import BtnSignOut from "./dashboard/components/btnSignOut";
 
-const archivo = Archivo({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const robotoFlex = Roboto_Flex({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export default function LayoutDashBoard({ children }) {
     return (
-        <body className={`${archivo.className} flex dashboard`}>
+        <body className={`${robotoFlex.className} flex dashboard`}>
             <header className="dash-header fixed bg-white top-0 w-full flex justify-between items-center px-5 shadow-md z-10">
                 <p className="text-4xl">CandlesLab</p>
                 <div className="flex items-center gap-5">
+                    <BtnSignOut />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

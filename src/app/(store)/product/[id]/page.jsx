@@ -1,13 +1,13 @@
 import "./assets/product.scss";
 
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 import Head from "./../../components/head";
 import Image from "next/image";
 import Carousel from "@/app/(store)/components/Carousel";
 import ProductDesc from "./components/productDesc";
 import ProductButtons from "./components/productButtons";
 
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default async function Product({ params }) {
     const res = await fetch(`${process.env.NODE_ENV === "development" ? `http://${process.env.APP_URL}` : `https://${process.env.VERCEL_URL}`}/api/get-product/${params.id}`, {
@@ -97,12 +97,12 @@ export default async function Product({ params }) {
                     <div className={`about-product -mx-6 md:mx-0 mt-10 p-6 bg-gray-50 md:bg-transparent`}>
                         <div className="controls mx-auto">
                             <div>
-                                <p className={`${baskerville.className} flex font-bold text-xl text-gray-500`}>
+                                <p className={`${nunito.className} flex font-bold text-xl text-gray-500`}>
                                     Description <span className="ml-auto">+</span>
                                 </p>
                             </div>
                             <div className="mt-4 md:mt-0">
-                                <p className={`${baskerville.className} flex font-bold text-xl text-gray-500`}>
+                                <p className={`${nunito.className} flex font-bold text-xl text-gray-500`}>
                                     Rewiews <span className="ml-auto">+</span>
                                 </p>
                             </div>
@@ -110,7 +110,7 @@ export default async function Product({ params }) {
                         <div className="content">
                             <div className="full-desc grid">
                                 <ProductDesc />
-                                {/* <p className={`${baskerville.className} flex font-bold text-xl text-gray-500`}>
+                                {/* <p className={`${nunito.className} flex font-bold text-xl text-gray-500`}>
                                     Description <span className="ml-auto">+</span>
                                 </p>
                                 <div className="desc-wrapper">
@@ -125,7 +125,7 @@ export default async function Product({ params }) {
                                 </div> */}
                             </div>
                             <div className="reviews mt-4 md:mt-0">
-                                <p className={`${baskerville.className} flex font-bold text-xl text-gray-500`}>
+                                <p className={`${nunito.className} flex font-bold text-xl text-gray-500`}>
                                     Rewiews <span className="ml-auto">+</span>
                                 </p>
                             </div>

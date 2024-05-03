@@ -1,16 +1,16 @@
-import { Libre_Baskerville } from "next/font/google";
+import { Nunito } from "next/font/google";
 
 import "./assets/contact.scss";
 import Breadcrumbs from "../components/breadcrumbs";
 import Image from "next/image";
 
-const baskerville = Libre_Baskerville({ subsets: ["latin"], weight: ["400", "700"] });
+const nunito = Nunito({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function Contact() {
     return (
         <div className="contacts-page">
             <section className="head">
-                <h1 className={`text-4xl font-thin ${baskerville.className}`}>Contact Us</h1>
+                <h1 className={`text-4xl font-thin ${nunito.className}`}>Contact Us</h1>
                 <Breadcrumbs />
             </section>
             <section className="contact-block text-black">
