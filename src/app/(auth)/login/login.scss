@@ -30,7 +30,8 @@ section.login-page {
             background-color: transparent;
             position: relative;
             z-index: 2;
-            &:focus {
+            &:focus,
+            &.filled {
                 outline: none;
                 border-color: #4f9afc;
 

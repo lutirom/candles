@@ -4,7 +4,6 @@ import { auth } from "@/auth";
 
 export default async function Login() {
     const session = await auth();
-    console.log("🚀 ~ Login ~ session:", session);
 
     function isLoggedIn() {
         if (session === null) return false;

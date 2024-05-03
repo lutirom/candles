@@ -14,19 +14,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     let user = null;
 
                     user = await getUser(credentials.username, credentials.password);
-                    console.log("🚀 ~ authorize: ~ user:", user);
 
                     if (!user) {
-                        throw Error("Credentials errors");
+                        return null;
+                    }
+
+                    const validPassword = credentials.password === user.password;
+
+                    if (!validPassword) {
+                        return null;
                     }
 
                     return user;
                 } catch (err) {
-                    throw new Error("Something wrong");
+                    console.error("Something went wrong");
+                    throw err;
                 }
             },
         }),
     ],
+    session: {
+        maxAge: 10 * 60 * 60,
+    },
 });
 
 async function getUser(username, password) {
